@@ -1,6 +1,6 @@
-import java.io.File;
-import java.util.*;
 import java.io.FileNotFoundException;
+import java.io.File;
+import java.util.Scanner;
 
 public class WordCounter {
 
@@ -11,8 +11,10 @@ public class WordCounter {
             File textFile = new File(filename);
             Scanner textScanner = new Scanner(textFile);
 
-            while (textScanner.hasNextLine()) {
+            // Iterate through each line of the file
+            while (textScanner.hasNext()) {
                 String word = textScanner.next();
+
                 for (int i = 0; i < searchArgsLength; i++) {
                     if (word.equals(searchTerms[i])) {
                         count[i] += 1;
@@ -25,13 +27,14 @@ public class WordCounter {
             return count;
 
         } catch (FileNotFoundException e) {
-            System.out.println("File not found...." + filename);
-            return new int[0];
+            System.out.println("File not found: " + filename);
+            return null;
         }
+
     }
 
     public static void main(String[] args) {
-        if (args.length > 0) {
+        if (args.length > 1) {
             int searchArgsLength = args.length - 1;
             int[] count = new int[searchArgsLength];
             String filename = args[0];
@@ -43,25 +46,28 @@ public class WordCounter {
 
             // condition for when args length is '1'
             if (searchArgsLength == 1) {
-                System.out.println("First condition");
                 count = counter(searchArgsLength, filename, searchTerms);
-                System.out.println("The word '" + searchTerms[0] + "' appears " + count[0] + " times.");
+
+                if (count != null)
+                    System.out.println("The word '" + searchTerms[0] + "' appears " + count[0] + " times.");
 
             } else if (searchArgsLength > 1) {     // condition for "more than 1" args
-                System.out.println("Second condition");
-
                 count = counter(searchArgsLength, filename, searchTerms);
 
-                System.out.println("|---------------|---------------|");
-                System.out.println("|     WORD      |      COUNT    |");
-                for (int i = 0; i < searchArgsLength; i++) {
+                if (count != null) {
                     System.out.println("|---------------|---------------|");
-                    System.out.println("       " + searchTerms[i] + "             " + count[i] + "      ");
+                    System.out.println("|     WORD      |      COUNT    |");
+                    for (int i = 0; i < searchArgsLength; i++) {
+                        System.out.println("|---------------|---------------|");
+                        System.out.println("       " + searchTerms[i] + "             " + count[i] + "      ");
+                    }
+                    System.out.println("|---------------|---------------|");
                 }
-                System.out.println("|---------------|---------------|");
             }
-        } else {
+        } else if (args.length == 0) {
             System.out.println("No input given in the CLI...");
+        } else if(args.length == 1) {
+            System.out.println("No input arguments given in the CLI...");
         }
     }
 }
