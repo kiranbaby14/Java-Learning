@@ -34,9 +34,10 @@ public class WordCounter {
     }
 
     public static void main(String[] args) {
-        if (args.length > 1) {
+        if (args.length > 0) {
             int searchArgsLength = args.length - 1;
             int[] count = new int[searchArgsLength];
+            int total = 0;
             String filename = args[0];
             String[] searchTerms = new String[searchArgsLength];
 
@@ -44,7 +45,7 @@ public class WordCounter {
                 searchTerms[i] = args[i + 1];
             }
 
-            // condition for when args length is '1'
+            // Condition for when args length is '1'
             if (searchArgsLength == 1) {
                 count = counter(searchArgsLength, filename, searchTerms);
 
@@ -54,20 +55,25 @@ public class WordCounter {
             } else if (searchArgsLength > 1) {     // condition for "more than 1" args
                 count = counter(searchArgsLength, filename, searchTerms);
 
+                // Total count
+                for(int val: count){
+                    total += val;
+                }
+
                 if (count != null) {
                     System.out.println("|---------------|---------------|");
                     System.out.println("|     WORD      |      COUNT    |");
+                    System.out.println("|---------------|---------------|");
                     for (int i = 0; i < searchArgsLength; i++) {
-                        System.out.println("|---------------|---------------|");
-                        System.out.println("       " + searchTerms[i] + "             " + count[i] + "      ");
+                        System.out.println("|     " + searchTerms[i] + "      |      " + count[i] + "    |");
                     }
+                    System.out.println("|---------------|---------------|");
+                    System.out.println("|    Total      |      " + total + "      |");
                     System.out.println("|---------------|---------------|");
                 }
             }
-        } else if (args.length == 0) {
-            System.out.println("No input given in the CLI...");
-        } else if(args.length == 1) {
-            System.out.println("No input arguments given in the CLI...");
+        } else {
+            System.out.println("Usage: java WordCounter <filename> <searchTerm>");
         }
     }
 }
