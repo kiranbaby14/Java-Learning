@@ -14,9 +14,13 @@ public class WordCounter {
             // Iterate through each line of the file
             while (textScanner.hasNext()) {
                 String word = textScanner.next();
+                // Replace all special characters in the string with " "
+                word = word.replaceAll("[^A-Za-z0-9]"," ");
 
                 for (int i = 0; i < searchArgsLength; i++) {
                     if (word.equals(searchTerms[i])) {
+                        count[i] += 1;
+                    } else if(word.contains(searchTerms[i]) && word.contains(" ")) {
                         count[i] += 1;
                     }
                 }
