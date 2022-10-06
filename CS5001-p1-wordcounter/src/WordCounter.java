@@ -1,5 +1,5 @@
-import java.io.FileNotFoundException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * WordCounter
  * Program to get the "count of words" given as input from an already existing file.
  *
- * @author: Kiran Baby, 220015821
+ * @author: Student ID: 220015821
  */
 
 public class WordCounter {
 
     /**
-     * Method to find the count of each words passed into the args.
+     * Method to find the count of each word passed into the args.
      *
      * @param searchArgsLength the number of arguments to be searched for
      * @param filename location of the file
@@ -30,7 +30,7 @@ public class WordCounter {
             while (textScanner.hasNext()) {
                 String word = textScanner.next();
                 // Remove special characters in the string and store the o/p to an array
-                String[] arrOfStr = word.split("[^A-Za-z0-9]");
+                String[] arrOfStr = word.split("[^A-Za-z0-9_]");
 
                 for (int i = 0; i < searchArgsLength; i++) {
                     for (String str : arrOfStr) {
@@ -76,7 +76,7 @@ public class WordCounter {
      * Returns largest element in the arraylist.
      *
      * @param arr an arraylist
-     * @return the index of the largest elemrnt in the arraylist
+     * @return the index of the largest element in the arraylist
      */
     public static String maxElementInArray(ArrayList<String> arr) {
         int index = 0;
@@ -133,7 +133,7 @@ public class WordCounter {
                         totalCount += val;
                     }
 
-                    for (String word : searchTerms) { //add all elements in searchterm array into arraylist: "leftColumnArr"
+                    for (String word : searchTerms) { //add all elements in searchTerms array into arraylist: "leftColumnArr"
                         leftColumnArr.add(word);
                     }
 
