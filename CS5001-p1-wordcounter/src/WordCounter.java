@@ -16,8 +16,8 @@ public class WordCounter {
      * Method to find the count of each word passed into the args.
      *
      * @param searchArgsLength the number of arguments to be searched for
-     * @param filename location of the file
-     * @param searchTerms an array containing the arguments to be searched for
+     * @param filename         location of the file
+     * @param searchTerms      an array containing the arguments to be searched for
      * @return the count of all arguments
      */
     public static int[] counter(int searchArgsLength, String filename, String[] searchTerms) {
@@ -56,10 +56,10 @@ public class WordCounter {
     /**
      * Table Outline.
      *
-     * @param leftSize the space size to be given in the left column of the table
+     * @param leftSize  the space size to be given in the left column of the table
      * @param rightSize the space size to be given in the right column of the table
      */
-    public static void tabeleOutline(int leftSize, int rightSize) {
+    public static void tableOutline(int leftSize, int rightSize) {
         // Pattern
         System.out.print("|");
         for (int i = 0; i < leftSize + 2; i++) {
@@ -149,19 +149,19 @@ public class WordCounter {
                     int rightSize = maxRight.length(); // space length of the right column in the table
 
                     // Table design
-                    tabeleOutline(leftSize, rightSize); //calls function tableOutline
+                    tableOutline(leftSize, rightSize); //calls function tableOutline
                     System.out.printf("| %-" + leftSize + "s | %-" + rightSize + "s |", "WORD", "COUNT");
                     System.out.println();
-                    tabeleOutline(leftSize, rightSize);
+                    tableOutline(leftSize, rightSize);
 
                     for (int i = 0; i < searchArgsLength; i++) { // table values
                         System.out.printf("| %-" + leftSize + "s | %" + rightSize + "s |", searchTerms[i], count[i]);
                         System.out.println();
                     }
-                    tabeleOutline(leftSize, rightSize);
+                    tableOutline(leftSize, rightSize);
                     System.out.printf("| %-" + leftSize + "s | %" + rightSize + "d |", "TOTAL", totalCount);
                     System.out.println();
-                    tabeleOutline(leftSize, rightSize);
+                    tableOutline(leftSize, rightSize);
 
                 }
             }
