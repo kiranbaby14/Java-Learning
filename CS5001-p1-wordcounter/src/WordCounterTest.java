@@ -11,7 +11,8 @@ class WordCounterTest {
     @Test
     void arrayCountShouldReturnHundred() {
         WordCounter wordCounterObj =new WordCounter();
-        assertEquals(new int[]{100}, wordCounterObj.counter(1, "a-tale-of-two-cities.txt", new String[]{"Charles"}));
+        ClassLoader classLoader = getClass().getClassLoader();
+        assertEquals(Arrays.toString(new int[]{100}), Arrays.toString(wordCounterObj.counter(1, classLoader.getResource("a-tale-of-two-cities.txt").getFile(), new String[]{"Charles"})));
     }
 
     @Test
