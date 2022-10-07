@@ -42,7 +42,6 @@ public class WordCounter {
                 }
             }
 
-
             textScanner.close();
 
             return count;
