@@ -46,7 +46,7 @@ public abstract class Piece {
     }
 }
 
-public class StepMover implements Piece {
+public class StepMover extends Piece {
     public StepMover(Player owner, Square square, int rank) {
         this.owner = owner;
         this.square = square;
@@ -54,14 +54,14 @@ public class StepMover implements Piece {
     }
 }
 
-public class Scout implements Piece {
+public class Scout extends Piece {
     public Scout(Player owner, Square square){
         this.owner = owner;
         this.square = square;
     }
 }
 
-public abstract class ImmobilePiece implements Piece{
+public abstract class ImmobilePiece extends Piece{
     public ImmobilePiece(Player owner, Square square, int rank) {
         this.owner = owner;
         this.square = square;
@@ -69,7 +69,7 @@ public abstract class ImmobilePiece implements Piece{
     }
 }
 
-public class Spy implements StepMover{
+public class Spy extends StepMover{
     public Spy(Player owner, Square square){
         this.owner = owner;
         this.square = square;
@@ -81,7 +81,7 @@ public class Spy implements StepMover{
     }
 }
 
-public class Miner implements StepMover {
+public class Miner extends StepMover {
     public Miner(Player owner, Square square) {
         this.owner = owner;
         this.square = square;
@@ -93,7 +93,7 @@ public class Miner implements StepMover {
     }
 }
 
-public class Flag implements ImmobilePiece {
+public class Flag extends ImmobilePiece {
     public Flag(Player owner, Square square) {
         this.owner = owner;
         this.square = square;
@@ -105,7 +105,7 @@ public class Flag implements ImmobilePiece {
     }
 }
 
-public class Bomb implements ImmobilePiece {
+public class Bomb extends ImmobilePiece {
     public Bomb(Player owner, Square square) {
         this.owner = owner;
         this.square = square;

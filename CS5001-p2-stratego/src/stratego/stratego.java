@@ -21,24 +21,36 @@ public class Game {
     }
 
     public Player getPlayer(int playerNumber) {
-        if(this.p0.playernumber.equals(playerNumber)) {
+        if (this.p0.playernumber.equals(playerNumber)) {
             return this.p0
+        } else if (!this.p0.playernumber.equals(playerNumber) && !this.p1.playernumber.equals(playerNumber) {
+            throw new IllegalArgumentException("No such player exists!!");
         }
 
         return this.p1
     }
 
     public Player getWinner() {
-
+        if(this.p0.lost) {
+            return this.p1
+        } else if(this.p1.lost) {
+            return this.p0
+        }
     }
 
     public Square getSquare(int row, int col) {
+        if(row > 10 || col >10) {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
+        } else {
 
+        }
     }
 }
 
 // Class Player
 public class Player {
+
+    public boolean lost = false;
     public Player(String name, int playerNumber) {
         this.name = name;
         this.playerNumber = playerNumber;
@@ -52,8 +64,8 @@ public class Player {
 
     }
 
-    public void loseGame(){
-
+    public void loseGame() {
+        lost = true;
     }
 
     public boolean hasLost() {
