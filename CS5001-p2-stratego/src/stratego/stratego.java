@@ -1,5 +1,5 @@
 package stratego;
-package stratego.Pieces;
+package stratego.pieces;
 
 // enum CombatResult
 public final enum CombatResult {
@@ -21,7 +21,11 @@ public class Game {
     }
 
     public Player getPlayer(int playerNumber) {
+        if(this.p0.playernumber.equals(playerNumber)) {
+            return this.p0
+        }
 
+        return this.p1
     }
 
     public Player getWinner() {
@@ -29,6 +33,30 @@ public class Game {
     }
 
     public Square getSquare(int row, int col) {
+
+    }
+}
+
+// Class Player
+public class Player {
+    public Player(String name, int playerNumber) {
+        this.name = name;
+        this.playerNumber = playerNumber;
+    }
+
+    public String getName() {
+
+    }
+
+    public int getPlayerNumber() {
+
+    }
+
+    public void loseGame(){
+
+    }
+
+    public boolean hasLost() {
 
     }
 }
@@ -67,30 +95,6 @@ public class Square {
     }
 
     public boolean canBeEntered() {
-
-    }
-}
-
-// Class Player
-public class Player {
-    public Player(String name, int playerNumber) {
-        this.name = name;
-        this.playerNumber = playerNumber;
-    }
-
-    public String getName() {
-
-    }
-
-    public int getPlayerNumber() {
-
-    }
-
-    public void loseGame(){
-
-    }
-
-    public boolean hasLost() {
 
     }
 }
