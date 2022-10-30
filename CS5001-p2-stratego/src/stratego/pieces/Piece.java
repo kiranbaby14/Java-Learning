@@ -1,8 +1,15 @@
 package stratego.pieces;
 
+import stratego.CombatResult;
+import stratego.Player;
+import stratego.Square;
 import java.util.ArrayList;
 
 public abstract class Piece {
+    public final int rank;
+    public final Square square;
+    public final Player owner;
+
     public Piece(Player owner, Square square, int rank) {
         this.owner = owner;
         this.square = square;

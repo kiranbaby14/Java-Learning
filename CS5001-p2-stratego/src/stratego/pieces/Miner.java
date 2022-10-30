@@ -1,9 +1,16 @@
 package stratego.pieces;
 
-import java.util.ArrayList;
+import stratego.CombatResult;
+import stratego.Player;
+import stratego.Square;
 
 public class Miner extends StepMover {
+
+    public final Player owner;
+    public final Square square;
+
     public Miner(Player owner, Square square) {
+        super();
         this.owner = owner;
         this.square = square;
     }
@@ -11,5 +18,6 @@ public class Miner extends StepMover {
     @Override
     public CombatResult resultWhenAttacking(Piece targetPiece) {
 
+        return null;
     }
 }

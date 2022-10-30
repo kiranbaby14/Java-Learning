@@ -5,6 +5,8 @@ import java.util.ArrayList;
 // Class Player
 public class Player {
 
+    public final String name;
+    public final int playerNumber;
     public boolean lost = false;
 
     public Player(String name, int playerNumber) {
@@ -14,10 +16,11 @@ public class Player {
 
     public String getName() {
 
+        return null;
     }
 
     public int getPlayerNumber() {
-
+        return 0;
     }
 
     public void loseGame() {
@@ -26,5 +29,6 @@ public class Player {
 
     public boolean hasLost() {
 
+        return false;
     }
 }

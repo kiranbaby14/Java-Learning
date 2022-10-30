@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 // Class Game
 public class Game {
-    private final int HEIGHT = 10;
-    private final int WIDTH = 10;
-    private final int[] WATER_ROWS = {4, 5};
-    private final int[] WATER_COLS = {2, 3, 6, 7};
+    public final int HEIGHT = 10;
+    public final int WIDTH = 10;
+    public final int[] WATER_ROWS = {4, 5};
+    public final int[] WATER_COLS = {2, 3, 6, 7};
 
-    // Board of the game
-    public ArrayList<ArrayList<Integer>> game = new ArrayList<ArrayList<Integer>>();
+    private final Player p0;
+    private final Player p1;
 
 
     public Game(Player p0, Player p1) {
@@ -19,9 +19,9 @@ public class Game {
     }
 
     public Player getPlayer(int playerNumber) {
-        if (this.p0.playernumber.equals(playerNumber)) {
+        if (this.p0.playerNumber == playerNumber) {
             return this.p0;
-        } else if (!this.p0.playernumber.equals(playerNumber) && !this.p1.playernumber.equals(playerNumber)) {
+        } else if (!(this.p0.playerNumber == playerNumber) && !(this.p1.playerNumber == playerNumber)) {
             throw new IllegalArgumentException("No such player exists!!");
         }
 
@@ -29,27 +29,32 @@ public class Game {
     }
 
     public Player getWinner() {
+
         if (this.p0.lost) {
             return this.p1;
         } else if (this.p1.lost) {
             return this.p0;
         }
+        return null;
     }
 
     public Square getSquare(int row, int col) {
+
         if (row > HEIGHT || col > WIDTH) {
             throw new IndexOutOfBoundsException("Index is out of bounds");
         } else {
+            Game game = new Game(this.p0, this.p1);
+            for (int water_row : WATER_ROWS) {
+                for (int water_col : WATER_COLS) {
 
-            for (int i = 0; i < HEIGHT; i++) {
-                for (int j=0; j<WIDTH; j++) {
-                    if(row.equals(i) && col.equals(j)) {
-                        Square squareObj = new Square(game, HEIGHT, WIDTH, true);
+                    if (row == water_row && col == water_col) {
+                        return new Square(game, HEIGHT, WIDTH, true);
                     } else {
-                        Square squareObj = new Square(game, HEIGHT, WIDTH, false);
+                        return new Square(game, HEIGHT, WIDTH, false);
                     }
                 }
             }
         }
+        return null;
     }
 }

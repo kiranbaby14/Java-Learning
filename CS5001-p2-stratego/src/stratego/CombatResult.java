@@ -1,7 +1,7 @@
 package stratego;
 
 // enum CombatResult
-public final enum CombatResult {
+public enum CombatResult {
     WIN,
     DRAW,
     LOSE
