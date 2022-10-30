@@ -2,13 +2,6 @@ package stratego;
 
 import java.util.ArrayList;
 
-// enum CombatResult
-public final enum CombatResult {
-    WIN,
-    DRAW,
-    LOSE
-}
-
 // Class Game
 public class Game {
     private final int HEIGHT = 10;
@@ -58,70 +51,5 @@ public class Game {
                 }
             }
         }
-    }
-}
-
-// Class Player
-public class Player {
-
-    public boolean lost = false;
-
-    public Player(String name, int playerNumber) {
-        this.name = name;
-        this.playerNumber = playerNumber;
-    }
-
-    public String getName() {
-
-    }
-
-    public int getPlayerNumber() {
-
-    }
-
-    public void loseGame() {
-        lost = true;
-    }
-
-    public boolean hasLost() {
-
-    }
-}
-
-// class Square
-public class Square {
-    public Square(Game game, int row, int col, boolean isWater) {
-        this.game = game;
-        this.row = row;
-        this.col = col;
-        this.isWater = isWater;
-    }
-
-    public void placePiece(Piece piece) {
-
-    }
-
-    public void removePiece() {
-
-    }
-
-    public Game getGame() {
-
-    }
-
-    public Piece getPiece() {
-
-    }
-
-    public int getRow() {
-
-    }
-
-    public int getCol() {
-
-    }
-
-    public boolean canBeEntered() {
-
     }
 }
