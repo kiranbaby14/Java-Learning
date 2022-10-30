@@ -1,5 +1,4 @@
 package stratego;
-package stratego.pieces;
 
 import java.util.ArrayList;
 
