@@ -37,17 +37,17 @@ public class Square {
     }
 
     public int getRow() {
-
-        return 0;
+        return this.row;
     }
 
     public int getCol() {
-
-        return 0;
+        return this.col;
     }
 
     public boolean canBeEntered() {
-
-        return false;
+        if(this.isWater) {
+            return false;
+        }
+        return true;
     }
 }

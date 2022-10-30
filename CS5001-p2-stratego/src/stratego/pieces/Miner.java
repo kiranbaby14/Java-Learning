@@ -10,7 +10,7 @@ public class Miner extends StepMover {
     public final Square square;
 
     public Miner(Player owner, Square square) {
-        super();
+        super(owner, square);
         this.owner = owner;
         this.square = square;
     }

@@ -11,7 +11,7 @@ public class Spy extends StepMover{
     public final Square square;
 
     public Spy(Player owner, Square square){
-        super();
+        super(owner, square);
         this.owner = owner;
         this.square = square;
     }

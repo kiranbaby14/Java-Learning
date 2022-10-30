@@ -3,15 +3,26 @@ package stratego.pieces;
 import stratego.Player;
 import stratego.Square;
 
-public class StepMover extends Piece {
-    public final Player owner;
-    public final Square square;
-    public final int rank;
+import java.util.ArrayList;
 
-    public StepMover(Player owner, Square square, int rank) {
-        super();
-        this.owner = owner;
-        this.square = square;
-        this.rank =rank;
+public class StepMover extends Piece {
+    public StepMover(Player owner, Square square) {
+        super(owner, square);
+
     }
+    public StepMover(Player owner, Square square, int rank) {
+        super(owner, square, rank);
+
+    }
+
+    @Override
+    public ArrayList<Integer> getLegalMoves() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Integer> getLegalAttacks() {
+        return null;
+    }
+
 }

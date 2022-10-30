@@ -48,9 +48,9 @@ public class Game {
                 for (int water_col : WATER_COLS) {
 
                     if (row == water_row && col == water_col) {
-                        return new Square(game, HEIGHT, WIDTH, true);
+                        return new Square(game, row, col, true);
                     } else {
-                        return new Square(game, HEIGHT, WIDTH, false);
+                        return new Square(game, row, col, false);
                     }
                 }
             }
