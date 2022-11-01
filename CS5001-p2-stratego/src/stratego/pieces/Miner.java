@@ -14,7 +14,7 @@ import stratego.Square;
 public class Miner extends StepMover {
 
     /**
-     * Constructor of the Miner class
+     * Constructor of the Miner class.
      *
      * @param owner the player who owns the piece.
      * @param square the square in which the piece is located.

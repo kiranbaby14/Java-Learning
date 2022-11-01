@@ -114,6 +114,8 @@ public class Square {
 
     /**
      * Method to set the connection between a square and its piece.
+     *
+     * @param pieceParam parameter to set the piece to.
      */
     public void setPiece(Piece pieceParam) {
         this.piece = pieceParam;

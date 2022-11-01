@@ -17,7 +17,7 @@ import static java.util.Collections.EMPTY_LIST;
 public class Flag extends ImmobilePiece {
 
     /**
-     * Constructor of the Flag class
+     * Constructor of the Flag class.
      *
      * @param owner the player who owns the piece.
      * @param square the square in which the piece is located.
