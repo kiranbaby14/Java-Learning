@@ -1,39 +1,51 @@
 package stratego;
 
 import stratego.pieces.Piece;
+import stratego.pieces.StepMover;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import stratego.Game;
 
 // class Square
 public class Square {
-    public final Game game;
-    public final int col;
-    public final int row;
-    public final boolean isWater;
+    private final Game game;
+    private final int col;
+    private final int row;
+    private final boolean isWater;
+    public Piece piece;
 
     public Square(Game game, int row, int col, boolean isWater) {
         this.game = game;
         this.row = row;
         this.col = col;
         this.isWater = isWater;
+        this.piece = null;
     }
 
     public void placePiece(Piece piece) {
-
+        if (this.piece == null) {
+            this.piece = piece;
+            if (this.game != null) {
+                Game.board[this.row][this.col] = this;
+//                System.out.println(Arrays.deepToString(this.game.board));
+            }
+        } else {
+            throw new IllegalArgumentException("Square already occupied!!");
+        }
     }
 
     public void removePiece() {
-
+        this.piece = null;
     }
 
     public Game getGame() {
-
-        return null;
+        return this.game;
     }
 
     public Piece getPiece() {
-
-        return null;
+        return this.piece;
     }
 
     public int getRow() {
@@ -45,9 +57,14 @@ public class Square {
     }
 
     public boolean canBeEntered() {
-        if(this.isWater) {
+        // checks if the square is water filled or if it is already occupied by piece
+        if ((this.isWater) || (this.piece != null)) {
             return false;
         }
         return true;
+    }
+
+    public boolean isSquareWater() {
+        return this.isWater;
     }
 }

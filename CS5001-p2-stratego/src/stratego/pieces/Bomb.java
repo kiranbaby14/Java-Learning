@@ -1,26 +1,25 @@
 package stratego.pieces;
+
 import stratego.Player;
 import stratego.Square;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Collections.EMPTY_LIST;
 
 public class Bomb extends ImmobilePiece {
-    public final Player owner;
-    public final Square square;
 
     public Bomb(Player owner, Square square) {
         super(owner, square);
-        this.owner = owner;
-        this.square = square;
     }
 
     @Override
-    public ArrayList<Integer> getLegalMoves() {
-        return null;
+    public List<Square> getLegalMoves() {
+        return (List<Square>) EMPTY_LIST;
     }
 
     @Override
-    public ArrayList<Integer> getLegalAttacks() {
-        return null;
+    public List<Square> getLegalAttacks() {
+        return (List<Square>) EMPTY_LIST;
     }
 }

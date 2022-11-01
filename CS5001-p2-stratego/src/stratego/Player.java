@@ -1,13 +1,14 @@
 package stratego;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Class Player
 public class Player {
 
-    public final String name;
-    public final int playerNumber;
-    public boolean lost = false;
+    private final String name;
+    private final int playerNumber;
+    private CombatResult playerGameStatus;
 
     public Player(String name, int playerNumber) {
         this.name = name;
@@ -15,20 +16,24 @@ public class Player {
     }
 
     public String getName() {
-
-        return null;
+        return this.name;
     }
 
     public int getPlayerNumber() {
-        return 0;
+        return this.playerNumber;
     }
 
     public void loseGame() {
-        lost = true;
+        this.playerGameStatus = CombatResult.LOSE;
     }
 
     public boolean hasLost() {
-
+        if (Objects.equals(this.playerGameStatus, CombatResult.LOSE))
+            return true;
         return false;
+    }
+
+    public CombatResult getPlayerGameStatus() {
+        return playerGameStatus;
     }
 }
