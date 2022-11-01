@@ -18,7 +18,10 @@ public class Game {
     private final Player p0;
     private final Player p1;
 
-    public static Square[][] board = new Square[HEIGHT][WIDTH]; // 2D matrix initialisation of the board
+    /**
+     * 2D matrix to represent the board.
+     */
+    private static Square[][] board = new Square[HEIGHT][WIDTH]; // 2D matrix initialisation of the board
 
     /**
      * Constructor for the class Game.
@@ -99,6 +102,22 @@ public class Game {
             throw new IndexOutOfBoundsException("Index is out of bounds");
         } else {
             return board[row][col];
+        }
+    }
+
+    /**
+     * Setter method to set the square for the board.
+     *
+     * @param row the row number of the square
+     * @param col the column number of the square
+     * @param setSquareParam the parameter value to be set
+     */
+    public void setSquare(int row, int col, Square setSquareParam) {
+
+        if (row > HEIGHT || col > WIDTH) {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
+        } else {
+            board[row][col] = setSquareParam;
         }
     }
 

@@ -34,7 +34,7 @@ public abstract class Piece {
         this.square.setPiece(this);
 
         if (this.square.getGame() != null) { // places the piece to the square
-            Game.board[this.square.getRow()][this.square.getCol()] = this.square;
+            this.square.getGame().setSquare(this.square.getRow(), this.square.getCol(), this.square);
         }
     }
 

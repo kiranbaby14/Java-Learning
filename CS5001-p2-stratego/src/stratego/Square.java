@@ -40,7 +40,7 @@ public class Square {
         if (this.piece == null) { // checks if the square is null
             this.piece = piece;
             if (this.game != null) {
-                Game.board[this.row][this.col] = this;
+                this.game.setSquare(this.row, this.col, this);
             }
         } else { // throws exception if square is already occupied
             throw new IllegalArgumentException("Square already occupied!!");
@@ -115,9 +115,9 @@ public class Square {
     /**
      * Method to set the connection between a square and its piece.
      *
-     * @param pieceParam parameter to set the piece to.
+     * @param setPieceParam parameter to set the piece to.
      */
-    public void setPiece(Piece pieceParam) {
-        this.piece = pieceParam;
+    public void setPiece(Piece setPieceParam) {
+        this.piece = setPieceParam;
     }
 }

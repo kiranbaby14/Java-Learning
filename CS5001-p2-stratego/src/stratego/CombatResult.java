@@ -9,15 +9,15 @@ package stratego;
  */
 public enum CombatResult {
     /**
-     * Sets the combat result to WIN
+     * Sets the combat result to WIN.
      */
     WIN,
     /**
-     * Sets the combat result to DRAW
+     * Sets the combat result to DRAW.
      */
     DRAW,
     /**
-     * Sets the combat result to LOSE
+     * Sets the combat result to LOSE.
      */
     LOSE
 }
