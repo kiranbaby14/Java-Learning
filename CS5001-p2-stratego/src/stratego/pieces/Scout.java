@@ -63,8 +63,8 @@ public class Scout extends Piece {
         int currentScoutCol = currentSquare.getCol();
 
         try {
-            if (Game.board[currentScoutRow + 1][currentScoutCol].getPiece() != null &&
-                    !Game.board[currentScoutRow + 1][currentScoutCol].isSquareWater()) {
+            if (Game.board[currentScoutRow + 1][currentScoutCol].getPiece() != null
+                    && !Game.board[currentScoutRow + 1][currentScoutCol].isSquareWater()) {
                 legalAttacksList.add(Game.board[currentScoutRow + 1][currentScoutCol]);
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
@@ -72,8 +72,8 @@ public class Scout extends Piece {
         }
 
         try {
-            if (Game.board[currentScoutRow - 1][currentScoutCol].getPiece() != null &&
-                    !Game.board[currentScoutRow - 1][currentScoutCol].isSquareWater()) {
+            if (Game.board[currentScoutRow - 1][currentScoutCol].getPiece() != null
+                    && !Game.board[currentScoutRow - 1][currentScoutCol].isSquareWater()) {
                 legalAttacksList.add(Game.board[currentScoutRow - 1][currentScoutCol]);
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
@@ -81,8 +81,8 @@ public class Scout extends Piece {
         }
 
         try {
-            if (Game.board[currentScoutRow][currentScoutCol + 1].getPiece() != null &&
-                    !Game.board[currentScoutRow][currentScoutCol + 1].isSquareWater()) {
+            if (Game.board[currentScoutRow][currentScoutCol + 1].getPiece() != null
+                    && !Game.board[currentScoutRow][currentScoutCol + 1].isSquareWater()) {
                 legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol + 1));
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
@@ -90,8 +90,8 @@ public class Scout extends Piece {
         }
 
         try {
-            if (Game.board[currentScoutRow][currentScoutCol - 1].getPiece() != null &&
-                    !Game.board[currentScoutRow][currentScoutCol - 1].isSquareWater()) {
+            if (Game.board[currentScoutRow][currentScoutCol - 1].getPiece() != null
+                    && !Game.board[currentScoutRow][currentScoutCol - 1].isSquareWater()) {
                 legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol - 1));
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
