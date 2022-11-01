@@ -3,7 +3,12 @@ package stratego;
 
 import java.util.Objects;
 
-// Class Game
+/**
+ * Game
+ * Package to initialise a game with two players.
+ *
+ * @author: Student ID: 220015821
+ */
 public class Game {
     private static final int HEIGHT = 10;
     private static final int WIDTH = 10;
@@ -13,8 +18,15 @@ public class Game {
     private final Player p0;
     private final Player p1;
 
-    public static Square[][] board = new Square[HEIGHT][WIDTH];
+    public static Square[][] board = new Square[HEIGHT][WIDTH]; // 2D matrix initialisation of the board
 
+    /**
+     * Constructor for the class Game.
+     * Initialises a 2D matrix of type Square when constructor is called.
+     *
+     * @param p0 player1
+     * @param p1 player2
+     */
     public Game(Player p0, Player p1) {
         this.p0 = p0;
         this.p1 = p1;
@@ -40,6 +52,12 @@ public class Game {
 
     }
 
+    /**
+     * Getter method to get the player according to the player number.
+     *
+     * @param playerNumber player number of the particular object
+     * @return player object
+     */
     public Player getPlayer(int playerNumber) {
         if (this.p0.getPlayerNumber() == playerNumber) {
             return this.p0;
@@ -51,6 +69,11 @@ public class Game {
         return this.p1;
     }
 
+    /**
+     * Getter method to get the winner among players.
+     *
+     * @return player who've won the game
+     */
     public Player getWinner() {
 
         if (Objects.equals(this.p0.getPlayerGameStatus(), CombatResult.LOSE)
@@ -63,7 +86,13 @@ public class Game {
         return null;
     }
 
-
+    /**
+     * Getter method to get the square for the board.
+     *
+     * @param row the row number of the square
+     * @param col the column number of the square
+     * @return Square pieces of the board
+     */
     public Square getSquare(int row, int col) {
 
         if (row > HEIGHT || col > WIDTH) {
@@ -73,10 +102,20 @@ public class Game {
         }
     }
 
+    /**
+     * Getter method to get the height of the board.
+     *
+     * @return height of the board
+     */
     public static int getHeight() {
         return HEIGHT;
     }
 
+    /**
+     * Getter method to get the width of the board.
+     *
+     * @return width of the board
+     */
     public static int getWidth() {
         return WIDTH;
     }
