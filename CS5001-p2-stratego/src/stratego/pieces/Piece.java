@@ -17,7 +17,7 @@ public abstract class Piece {
         this.owner = owner;
         this.square = square;
         this.rank = rank;
-        this.square.piece = this;
+        this.square.setPiece(this);
 
         if (this.square.getGame() != null) {
             Game.board[this.square.getRow()][this.square.getCol()] = this.square;
@@ -30,46 +30,46 @@ public abstract class Piece {
     public abstract List<Square> getLegalAttacks();
 
     public void move(Square toSquare) {
-        this.square.piece = null;
+        this.square.setPiece(null);
         this.square = toSquare;
-        toSquare.piece = this;
+        toSquare.setPiece(this);
     }
 
     public void attack(Square targetSquare) {
-        if (targetSquare.piece instanceof Bomb) {
+        if (targetSquare.getPiece() instanceof Bomb) {
             if (this.rank == 3) {
-                this.square.piece = null;
-                targetSquare.piece.square = null;
-                targetSquare.piece = null;
+                this.square.setPiece(null);
+                targetSquare.getPiece().square = null;
+                targetSquare.setPiece(null);
                 this.square = targetSquare;
-                this.square.piece = this;
+                this.square.setPiece(this);
             } else {
-                targetSquare.piece.square = null;
-                targetSquare.piece = null;
+                targetSquare.getPiece().square = null;
+                targetSquare.setPiece(null);
                 this.square = null;
             }
 
-        } else if (targetSquare.piece instanceof Flag) {
-            targetSquare.piece.owner.loseGame();
-            this.square.piece = null;
-            targetSquare.piece.square = null;
-            targetSquare.piece = null;
+        } else if (targetSquare.getPiece() instanceof Flag) {
+            targetSquare.getPiece().owner.loseGame();
+            this.square.setPiece(null);
+            targetSquare.getPiece().square = null;
+            targetSquare.setPiece(null);
             this.square = targetSquare;
-            this.square.piece = this;
-        } else if (this.rank > targetSquare.piece.getRank()) {
-            this.square.piece = null;
-            targetSquare.piece.square = null;
-            targetSquare.piece = null;
+            this.square.setPiece(this);
+        } else if (this.rank > targetSquare.getPiece().getRank()) {
+            this.square.setPiece(null);
+            targetSquare.getPiece().square = null;
+            targetSquare.setPiece(null);
             this.square = targetSquare;
-            this.square.piece = this;
-        } else if (this.rank < targetSquare.piece.getRank()) {
+            this.square.setPiece(this);
+        } else if (this.rank < targetSquare.getPiece().getRank()) {
             targetSquare = this.square;
-            targetSquare.piece = null;
-            this.square.piece = null;
+            targetSquare.setPiece(null);
+            this.square.setPiece(null);
             this.square = null;
-        } else if (this.rank == targetSquare.piece.getRank()) {
-            targetSquare.piece = null;
-            this.square.piece = null;
+        } else if (this.rank == targetSquare.getPiece().getRank()) {
+            targetSquare.setPiece(null);
+            this.square.setPiece(null);
             this.square = null;
         }
 
@@ -93,7 +93,7 @@ public abstract class Piece {
     }
 
     public void beCaptured() {
-        this.square.piece = null;
+        this.square.setPiece(null);
         this.square = null;
     }
 

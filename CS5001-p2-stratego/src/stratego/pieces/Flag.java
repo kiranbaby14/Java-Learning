@@ -26,6 +26,6 @@ public class Flag extends ImmobilePiece {
 
     @Override
     public void beCaptured() {
-        this.getSquare().piece = null;
+        this.getSquare().setPiece(null);
     }
 }

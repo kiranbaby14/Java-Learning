@@ -8,7 +8,7 @@ public class Square {
     private final int col;
     private final int row;
     private final boolean isWater;
-    public Piece piece;
+    private Piece piece;
 
     public Square(Game game, int row, int col, boolean isWater) {
         this.game = game;
@@ -59,5 +59,9 @@ public class Square {
 
     public boolean isSquareWater() {
         return this.isWater;
+    }
+
+    public void setPiece(Piece pieceParam) {
+        this.piece = pieceParam;
     }
 }
