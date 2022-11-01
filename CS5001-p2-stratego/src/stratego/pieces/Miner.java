@@ -14,10 +14,11 @@ public class Miner extends StepMover {
     @Override
     public CombatResult resultWhenAttacking(Piece targetPiece) {
 
-        if (this.getRank() > targetPiece.getRank())
+        if (this.getRank() > targetPiece.getRank()) {
             return CombatResult.WIN;
-        else if (this.getRank() < targetPiece.getRank())
+        } else if (this.getRank() < targetPiece.getRank()) {
             return CombatResult.LOSE;
+        }
         return null;
     }
 }

@@ -1,6 +1,5 @@
 package stratego;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 // Class Player
@@ -28,9 +27,7 @@ public class Player {
     }
 
     public boolean hasLost() {
-        if (Objects.equals(this.playerGameStatus, CombatResult.LOSE))
-            return true;
-        return false;
+        return Objects.equals(this.playerGameStatus, CombatResult.LOSE);
     }
 
     public CombatResult getPlayerGameStatus() {

@@ -20,25 +20,37 @@ public class Scout extends Piece {
         int currentScoutRow = currentSquare.getRow();
         int currentScoutCol = currentSquare.getCol();
 
-        for (int col = currentScoutCol + 1; col < Game.getWidth(); col++)
-            if (Game.board[currentScoutRow][col].canBeEntered())
+        for (int col = currentScoutCol + 1; col < Game.getWidth(); col++) {
+            if (Game.board[currentScoutRow][col].canBeEntered()) {
                 legalMovesList.add(Game.board[currentScoutRow][col]);
-            else break;
+            } else {
+                break;
+            }
+        }
 
-        for (int col = currentScoutCol - 1; col >= 0; col--)
-            if (Game.board[currentScoutRow][col].canBeEntered())
+        for (int col = currentScoutCol - 1; col >= 0; col--) {
+            if (Game.board[currentScoutRow][col].canBeEntered()) {
                 legalMovesList.add(Game.board[currentScoutRow][col]);
-            else break;
+            } else {
+                break;
+            }
+        }
 
-        for (int row = currentScoutRow + 1; row < Game.getHeight(); row++)
-            if (Game.board[row][currentScoutCol].canBeEntered())
+        for (int row = currentScoutRow + 1; row < Game.getHeight(); row++) {
+            if (Game.board[row][currentScoutCol].canBeEntered()) {
                 legalMovesList.add(Game.board[row][currentScoutCol]);
-            else break;
+            } else {
+                break;
+            }
+        }
 
-        for (int row = currentScoutRow - 1; row >= 0; row--)
-            if (Game.board[row][currentScoutCol].canBeEntered())
+        for (int row = currentScoutRow - 1; row >= 0; row--) {
+            if (Game.board[row][currentScoutCol].canBeEntered()) {
                 legalMovesList.add(Game.board[row][currentScoutCol]);
-            else break;
+            } else {
+                break;
+            }
+        }
 
         return legalMovesList;
     }
@@ -52,32 +64,36 @@ public class Scout extends Piece {
 
         try {
             if (Game.board[currentScoutRow + 1][currentScoutCol].getPiece() != null &&
-                    !Game.board[currentScoutRow + 1][currentScoutCol].isSquareWater())
+                    !Game.board[currentScoutRow + 1][currentScoutCol].isSquareWater()) {
                 legalAttacksList.add(Game.board[currentScoutRow + 1][currentScoutCol]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
             if (Game.board[currentScoutRow - 1][currentScoutCol].getPiece() != null &&
-                    !Game.board[currentScoutRow - 1][currentScoutCol].isSquareWater())
+                    !Game.board[currentScoutRow - 1][currentScoutCol].isSquareWater()) {
                 legalAttacksList.add(Game.board[currentScoutRow - 1][currentScoutCol]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
             if (Game.board[currentScoutRow][currentScoutCol + 1].getPiece() != null &&
-                    !Game.board[currentScoutRow][currentScoutCol + 1].isSquareWater())
+                    !Game.board[currentScoutRow][currentScoutCol + 1].isSquareWater()) {
                 legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol + 1));
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
             if (Game.board[currentScoutRow][currentScoutCol - 1].getPiece() != null &&
-                    !Game.board[currentScoutRow][currentScoutCol - 1].isSquareWater())
+                    !Game.board[currentScoutRow][currentScoutCol - 1].isSquareWater()) {
                 legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol - 1));
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }

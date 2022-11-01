@@ -42,7 +42,8 @@ public class Game {
     public Player getPlayer(int playerNumber) {
         if (this.p0.getPlayerNumber() == playerNumber) {
             return this.p0;
-        } else if ((this.p0.getPlayerNumber() != playerNumber) && (this.p1.getPlayerNumber() != playerNumber)) {
+        } else if ((this.p0.getPlayerNumber() != playerNumber) &&
+                (this.p1.getPlayerNumber() != playerNumber)) {
             throw new IllegalArgumentException("No such player exists!!");
         }
 
@@ -51,9 +52,11 @@ public class Game {
 
     public Player getWinner() {
 
-        if (Objects.equals(this.p0.getPlayerGameStatus(), CombatResult.LOSE) || Objects.equals(this.p1.getPlayerGameStatus(), CombatResult.WIN)) {
+        if (Objects.equals(this.p0.getPlayerGameStatus(), CombatResult.LOSE) ||
+                Objects.equals(this.p1.getPlayerGameStatus(), CombatResult.WIN)) {
             return this.p1;
-        } else if (Objects.equals(this.p1.getPlayerGameStatus(), CombatResult.LOSE) || Objects.equals(this.p0.getPlayerGameStatus(), CombatResult.WIN)) {
+        } else if (Objects.equals(this.p1.getPlayerGameStatus(), CombatResult.LOSE) ||
+                Objects.equals(this.p0.getPlayerGameStatus(), CombatResult.WIN)) {
             return this.p0;
         }
         return null;

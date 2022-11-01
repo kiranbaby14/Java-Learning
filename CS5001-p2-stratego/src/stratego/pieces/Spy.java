@@ -4,8 +4,6 @@ import stratego.CombatResult;
 import stratego.Player;
 import stratego.Square;
 
-import java.util.ArrayList;
-
 public class Spy extends StepMover {
 
     public Spy(Player owner, Square square) {
@@ -15,10 +13,10 @@ public class Spy extends StepMover {
     @Override
     public CombatResult resultWhenAttacking(Piece targetPiece) {
 
-        if (targetPiece.getRank() == 10)
+        if (targetPiece.getRank() == 10) {
             return CombatResult.WIN;
-//        add or a flag case here
-        else
+        } else { //        add for a flag case here
             return CombatResult.LOSE;
+        }
     }
 }

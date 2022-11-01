@@ -1,12 +1,6 @@
 package stratego;
 
 import stratego.pieces.Piece;
-import stratego.pieces.StepMover;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import stratego.Game;
 
 // class Square
 public class Square {
@@ -29,7 +23,6 @@ public class Square {
             this.piece = piece;
             if (this.game != null) {
                 Game.board[this.row][this.col] = this;
-//                System.out.println(Arrays.deepToString(this.game.board));
             }
         } else {
             throw new IllegalArgumentException("Square already occupied!!");

@@ -5,8 +5,6 @@ import stratego.Player;
 import stratego.Square;
 import stratego.Game;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class Piece {
@@ -23,7 +21,6 @@ public abstract class Piece {
 
         if (this.square.getGame() != null) {
             Game.board[this.square.getRow()][this.square.getCol()] = this.square;
-//            System.out.println(Arrays.deepToString(Game.board));
         }
 
     }
@@ -85,13 +82,13 @@ public abstract class Piece {
             } else {
                 return CombatResult.DRAW;
             }
-        } else if (this.rank > targetPiece.rank)
+        } else if (this.rank > targetPiece.rank) {
             return CombatResult.WIN;
-        else if (this.rank == targetPiece.rank)
+        } else if (this.rank == targetPiece.rank) {
             return CombatResult.DRAW;
-        else if (this.rank < targetPiece.rank)
+        } else if (this.rank < targetPiece.rank) {
             return CombatResult.LOSE;
-
+        }
         return null;
     }
 

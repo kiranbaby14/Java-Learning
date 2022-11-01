@@ -21,29 +21,33 @@ public class StepMover extends Piece {
         int currentPieceCol = currentSquare.getCol();
 
         try {
-            if (Game.board[currentPieceRow + 1][currentPieceCol].canBeEntered())
+            if (Game.board[currentPieceRow + 1][currentPieceCol].canBeEntered()) {
                 legalMovesList.add(Game.board[currentPieceRow + 1][currentPieceCol]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
-            if (Game.board[currentPieceRow - 1][currentPieceCol].canBeEntered())
+            if (Game.board[currentPieceRow - 1][currentPieceCol].canBeEntered()) {
                 legalMovesList.add(Game.board[currentPieceRow - 1][currentPieceCol]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
-            if (Game.board[currentPieceRow][currentPieceCol + 1].canBeEntered())
+            if (Game.board[currentPieceRow][currentPieceCol + 1].canBeEntered()) {
                 legalMovesList.add(Game.board[currentPieceRow][currentPieceCol + 1]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
-            if (Game.board[currentPieceRow][currentPieceCol - 1].canBeEntered())
+            if (Game.board[currentPieceRow][currentPieceCol - 1].canBeEntered()) {
                 legalMovesList.add(Game.board[currentPieceRow][currentPieceCol - 1]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
@@ -60,32 +64,36 @@ public class StepMover extends Piece {
 
         try {
             if (Game.board[currentPieceRow + 1][currentPieceCol].getPiece() != null &&
-                    !Game.board[currentPieceRow + 1][currentPieceCol].isSquareWater())
+                    !Game.board[currentPieceRow + 1][currentPieceCol].isSquareWater()) {
                 legalAttacksList.add(Game.board[currentPieceRow + 1][currentPieceCol]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
             if (Game.board[currentPieceRow - 1][currentPieceCol].getPiece() != null &&
-                    !Game.board[currentPieceRow - 1][currentPieceCol].isSquareWater())
+                    !Game.board[currentPieceRow - 1][currentPieceCol].isSquareWater()) {
                 legalAttacksList.add(Game.board[currentPieceRow - 1][currentPieceCol]);
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
             if (Game.board[currentPieceRow][currentPieceCol + 1].getPiece() != null &&
-                    !Game.board[currentPieceRow][currentPieceCol + 1].isSquareWater())
+                    !Game.board[currentPieceRow][currentPieceCol + 1].isSquareWater()) {
                 legalAttacksList.add(this.getSquare().getGame().getSquare(currentPieceRow, currentPieceCol + 1));
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try {
             if (Game.board[currentPieceRow][currentPieceCol - 1].getPiece() != null &&
-                    !Game.board[currentPieceRow][currentPieceCol - 1].isSquareWater())
+                    !Game.board[currentPieceRow][currentPieceCol - 1].isSquareWater()) {
                 legalAttacksList.add(this.getSquare().getGame().getSquare(currentPieceRow, currentPieceCol - 1));
+            }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
