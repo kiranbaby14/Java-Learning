@@ -19,22 +19,24 @@ public abstract class Piece {
     private Square square;
     private final Player owner;
 
-
     /**
      * Constructor for the class Piece.
      *
-     * @param owner the player who owns the piece
+     * @param owner  the player who owns the piece
      * @param square the square where the piece is placed
-     * @param rank the rank of the particular piece
+     * @param rank   the rank of the particular piece
      */
     public Piece(Player owner, Square square, int rank) {
         this.owner = owner;
         this.square = square;
         this.rank = rank;
         this.square.setPiece(this);
+        this.owner.setCountPieces(); // keep track of number of pieces for each player----(additional feature)
 
-        if (this.square.getGame() != null) { // places the piece to the square
-            this.square.getGame().setSquare(this.square.getRow(), this.square.getCol(), this.square);
+        if (this.owner.getCountPieces() <= 40) { // will only allow to create maximum of 40 pieces per player----(additional feature)
+            if (this.square.getGame() != null) { // places the piece to the square
+                this.square.getGame().setSquare(this.square.getRow(), this.square.getCol(), this.square);
+            }
         }
     }
 
@@ -62,7 +64,7 @@ public abstract class Piece {
     public void move(Square toSquare) {
         this.square.setPiece(null);
         this.square = toSquare;
-        toSquare.setPiece(this);
+        this.square.setPiece(this);
     }
 
     /**
@@ -72,15 +74,17 @@ public abstract class Piece {
      */
     public void attack(Square targetSquare) {
         if (targetSquare.getPiece() instanceof Bomb) {
-            if (this.rank == 3) {
+            if (this instanceof Miner) {
                 this.square.setPiece(null);
                 targetSquare.getPiece().square = null;
                 targetSquare.setPiece(null);
                 this.square = targetSquare;
                 this.square.setPiece(this);
+
             } else {
                 targetSquare.getPiece().square = null;
                 targetSquare.setPiece(null);
+                this.square.setPiece(null);
                 this.square = null;
             }
 
@@ -91,19 +95,23 @@ public abstract class Piece {
             targetSquare.setPiece(null);
             this.square = targetSquare;
             this.square.setPiece(this);
+
         } else if (this.rank > targetSquare.getPiece().getRank()) {
             this.square.setPiece(null);
             targetSquare.getPiece().square = null;
             targetSquare.setPiece(null);
             this.square = targetSquare;
             this.square.setPiece(this);
+
         } else if (this.rank < targetSquare.getPiece().getRank()) {
             targetSquare = this.square;
             targetSquare.setPiece(null);
             this.square.setPiece(null);
             this.square = null;
+
         } else if (this.rank == targetSquare.getPiece().getRank()) {
             targetSquare.setPiece(null);
+            targetSquare.getPiece().square = null;
             this.square.setPiece(null);
             this.square = null;
         }
@@ -118,12 +126,12 @@ public abstract class Piece {
      */
     public CombatResult resultWhenAttacking(Piece targetPiece) {
         if (targetPiece instanceof Bomb) {
-            if (this.rank == 3) {
+            if (this instanceof Miner) { // Miner can dig bomb
                 return CombatResult.WIN;
-            } else {
+            } else { // When opponent attacks bomb both gets destroyed
                 return CombatResult.DRAW;
             }
-        } else if (this.rank > targetPiece.rank) {
+        } else if (this.rank > targetPiece.rank) { // if attacker rank greater
             return CombatResult.WIN;
         } else if (this.rank == targetPiece.rank) {
             return CombatResult.DRAW;
@@ -137,8 +145,8 @@ public abstract class Piece {
      * Method to remove a piece when it is defeated.
      */
     public void beCaptured() {
-        this.square.setPiece(null);
-        this.square = null;
+        this.square.setPiece(null); // cut the square to piece connection
+        this.square = null; // cut the piece to square connection
     }
 
     /**

@@ -1,6 +1,5 @@
 package stratego;
 
-
 import java.util.Objects;
 
 /**
@@ -39,20 +38,15 @@ public class Game {
             for (int col = 0; col < WIDTH; col++) {
                 for (int water_rows : WATER_ROWS) {
                     for (int water_cols : WATER_COLS) {
-                        if ((water_rows != row) && (water_cols != col)) {
+                        if ((water_rows != row) && (water_cols != col)) { //Intialise all the squares of the board
                             board[row][col] = new Square(game, row, col, false);
+                        } else { // Initialise all the water squares
+                            board[water_rows][water_cols] = new Square(game, row, col, true);
                         }
                     }
                 }
             }
         }
-
-        for (int water_rows : WATER_ROWS) {
-            for (int water_cols : WATER_COLS) {
-                board[water_rows][water_cols] = new Square(game, 4, 2, true);
-            }
-        }
-
     }
 
     /**
@@ -62,11 +56,11 @@ public class Game {
      * @return player object
      */
     public Player getPlayer(int playerNumber) {
-        if (this.p0.getPlayerNumber() == playerNumber) {
-            return this.p0;
-        } else if ((this.p0.getPlayerNumber() != playerNumber)
+        if ((this.p0.getPlayerNumber() != playerNumber)
                 && (this.p1.getPlayerNumber() != playerNumber)) {
             throw new IllegalArgumentException("No such player exists!!");
+        } else if (this.p0.getPlayerNumber() == playerNumber) {
+            return this.p0;
         }
 
         return this.p1;
@@ -108,8 +102,8 @@ public class Game {
     /**
      * Setter method to set the square for the board.
      *
-     * @param row the row number of the square
-     * @param col the column number of the square
+     * @param row            the row number of the square
+     * @param col            the column number of the square
      * @param setSquareParam the parameter value to be set
      */
     public void setSquare(int row, int col, Square setSquareParam) {

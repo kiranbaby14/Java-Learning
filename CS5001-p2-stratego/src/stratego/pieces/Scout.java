@@ -19,7 +19,7 @@ public class Scout extends Piece {
     /**
      * Constructor for the class Scout.
      *
-     * @param owner the player who owns the piece
+     * @param owner  the player who owns the piece
      * @param square the square where the piece is placed
      */
     public Scout(Player owner, Square square) {
@@ -29,7 +29,7 @@ public class Scout extends Piece {
     /**
      * Getter method to get the legal moves of the pieces belonging to Scout class.
      *
-     * @return  a list of all the legal moves possible for a scout piece
+     * @return a list of all the legal moves possible for a scout piece
      */
     @Override
     public List<Square> getLegalMoves() {
@@ -40,8 +40,9 @@ public class Scout extends Piece {
 
         for (int row = currentScoutRow + 1; row < Game.getHeight(); row++) {
             // checks all the possible moves downwards
-            if (this.getSquare().getGame().getSquare(row, currentScoutCol).canBeEntered()) {
-                legalMovesList.add(this.getSquare().getGame().getSquare(row, currentScoutCol));
+            Square bottomSquares = currentSquare.getGame().getSquare(row, currentScoutCol);
+            if (bottomSquares.canBeEntered()) {
+                legalMovesList.add(bottomSquares);
             } else {
                 break;
             }
@@ -49,8 +50,9 @@ public class Scout extends Piece {
 
         for (int row = currentScoutRow - 1; row >= 0; row--) {
             // checks all the possible moves upwards
-            if (this.getSquare().getGame().getSquare(row, currentScoutCol).canBeEntered()) {
-                legalMovesList.add(this.getSquare().getGame().getSquare(row, currentScoutCol));
+            Square topSquares = currentSquare.getGame().getSquare(row, currentScoutCol);
+            if (topSquares.canBeEntered()) {
+                legalMovesList.add(topSquares);
             } else {
                 break;
             }
@@ -58,8 +60,9 @@ public class Scout extends Piece {
 
         for (int col = currentScoutCol + 1; col < Game.getWidth(); col++) {
             // checks for all the moves to the right
-            if (this.getSquare().getGame().getSquare(currentScoutRow, col).canBeEntered()) {
-                legalMovesList.add(this.getSquare().getGame().getSquare(currentScoutRow, col));
+            Square rightSquares = currentSquare.getGame().getSquare(currentScoutRow, col);
+            if (rightSquares.canBeEntered()) {
+                legalMovesList.add(rightSquares);
             } else {
                 break;
             }
@@ -67,8 +70,9 @@ public class Scout extends Piece {
 
         for (int col = currentScoutCol - 1; col >= 0; col--) {
             // checks all the possible moves to the left
-            if (this.getSquare().getGame().getSquare(currentScoutRow, col).canBeEntered()) {
-                legalMovesList.add(this.getSquare().getGame().getSquare(currentScoutRow, col));
+            Square leftSquares = currentSquare.getGame().getSquare(currentScoutRow, col);
+            if (leftSquares.canBeEntered()) {
+                legalMovesList.add(leftSquares);
             } else {
                 break;
             }
@@ -80,7 +84,7 @@ public class Scout extends Piece {
     /**
      * Getter method to get all the legal attacks of the pieces belonging to Scout class.
      *
-     * @return  a list of all the legal attacks possible for a scout piece
+     * @return a list of all the legal attacks possible for a scout piece
      */
     @Override
     public List<Square> getLegalAttacks() {
@@ -90,36 +94,40 @@ public class Scout extends Piece {
         int currentScoutCol = currentSquare.getCol();
 
         try { // checks for the possible attack downwards
-            if (this.getSquare().getGame().getSquare(currentScoutRow + 1, currentScoutCol).getPiece() != null
-                    && !this.getSquare().getGame().getSquare(currentScoutRow + 1, currentScoutCol).isSquareWater()) {
-                legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow + 1, currentScoutCol));
+            Square bottomSquare = currentSquare.getGame().getSquare(currentScoutRow + 1, currentScoutCol);
+            if (bottomSquare.getPiece() != null
+                    && !bottomSquare.isSquareWaterOccupied()) {
+                legalAttacksList.add(bottomSquare);
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try { // checks for the possible attack upwards
-            if (this.getSquare().getGame().getSquare(currentScoutRow - 1, currentScoutCol).getPiece() != null
-                    && !this.getSquare().getGame().getSquare(currentScoutRow - 1, currentScoutCol).isSquareWater()) {
-                legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow - 1, currentScoutCol));
+            Square topSquare = currentSquare.getGame().getSquare(currentScoutRow - 1, currentScoutCol);
+            if (topSquare.getPiece() != null
+                    && !topSquare.isSquareWaterOccupied()) {
+                legalAttacksList.add(topSquare);
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try { // checks for the possible attack to the right
-            if (this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol + 1).getPiece() != null
-                    && !this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol + 1).isSquareWater()) {
-                legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol + 1));
+            Square rightSquare = currentSquare.getGame().getSquare(currentScoutRow, currentScoutCol + 1);
+            if (rightSquare.getPiece() != null
+                    && !rightSquare.isSquareWaterOccupied()) {
+                legalAttacksList.add(rightSquare);
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");
         }
 
         try { // checks for the possible attack to the right
-            if (this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol - 1).getPiece() != null
-                    && !this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol - 1).isSquareWater()) {
-                legalAttacksList.add(this.getSquare().getGame().getSquare(currentScoutRow, currentScoutCol - 1));
+            Square leftSquare = currentSquare.getGame().getSquare(currentScoutRow, currentScoutCol - 1);
+            if (leftSquare.getPiece() != null
+                    && !leftSquare.isSquareWaterOccupied()) {
+                legalAttacksList.add(leftSquare);
             }
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Index out of bounds");

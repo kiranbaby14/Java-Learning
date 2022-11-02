@@ -19,7 +19,7 @@ public class Flag extends ImmobilePiece {
     /**
      * Constructor of the Flag class.
      *
-     * @param owner the player who owns the piece.
+     * @param owner  the player who owns the piece.
      * @param square the square in which the piece is located.
      */
     public Flag(Player owner, Square square) {
@@ -51,6 +51,9 @@ public class Flag extends ImmobilePiece {
      */
     @Override
     public void beCaptured() {
-        this.getSquare().setPiece(null);
+        this.getOwner().loseGame(); // make the player holding the flag lose
+        this.getSquare().setPiece(null); // disconnect square to piece connection
+        // set square to piece connection as null
+        this.getSquare().getGame().setSquare(this.getSquare().getRow(), this.getSquare().getCol(), null);
     }
 }

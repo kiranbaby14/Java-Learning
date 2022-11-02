@@ -16,7 +16,7 @@ public class Spy extends StepMover {
     /**
      * Constructor of the class Spy.
      *
-     * @param owner the player who owns the piece
+     * @param owner  the player who owns the piece
      * @param square the square in which that piece is going to be placed
      */
     public Spy(Player owner, Square square) {
@@ -32,9 +32,11 @@ public class Spy extends StepMover {
     @Override
     public CombatResult resultWhenAttacking(Piece targetPiece) {
 
-        if (targetPiece.getRank() == 10) {
+        if (targetPiece.getRank() == 10) { // Spy attacks a Marshal, then the Marshal is destroyed
             return CombatResult.WIN;
-        } else { //        add for a flag case here
+        } else if (targetPiece instanceof Flag) {
+            return CombatResult.WIN;
+        } else { // Spy attacks any piece other than a Marshal or a Flag, then the Spy is destroyed
             return CombatResult.LOSE;
         }
     }

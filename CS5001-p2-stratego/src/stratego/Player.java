@@ -13,11 +13,12 @@ public class Player {
     private final String name;
     private final int playerNumber;
     private CombatResult playerGameStatus;
+    private int countPieces = 0;
 
     /**
      * Constructor for the class Player.
      *
-     * @param name player's name
+     * @param name         player's name
      * @param playerNumber player's particular number
      */
     public Player(String name, int playerNumber) {
@@ -66,5 +67,21 @@ public class Player {
      */
     public CombatResult getPlayerGameStatus() {
         return playerGameStatus;
+    }
+
+    /**
+     * Getter method to get the total count of a pieces per player.
+     *
+     * @return the count of the number of pieces
+     */
+    public int getCountPieces() {
+        return countPieces;
+    }
+
+    /**
+     * Setter method to set the total count of a pieces per player.
+     */
+    public void setCountPieces() {
+        countPieces += 1;
     }
 }

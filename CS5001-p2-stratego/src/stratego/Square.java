@@ -108,7 +108,7 @@ public class Square {
      *
      * @return boolean
      */
-    public boolean isSquareWater() {
+    public boolean isSquareWaterOccupied() {
         return this.isWater;
     }
 

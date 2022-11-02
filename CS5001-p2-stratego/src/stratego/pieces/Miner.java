@@ -16,7 +16,7 @@ public class Miner extends StepMover {
     /**
      * Constructor of the Miner class.
      *
-     * @param owner the player who owns the piece.
+     * @param owner  the player who owns the piece.
      * @param square the square in which the piece is located.
      */
     public Miner(Player owner, Square square) {
@@ -33,7 +33,9 @@ public class Miner extends StepMover {
     @Override
     public CombatResult resultWhenAttacking(Piece targetPiece) {
 
-        if (this.getRank() > targetPiece.getRank()) {
+        if (targetPiece instanceof Bomb) {
+            return CombatResult.WIN;
+        } else if (this.getRank() > targetPiece.getRank()) {
             return CombatResult.WIN;
         } else if (this.getRank() < targetPiece.getRank()) {
             return CombatResult.LOSE;
