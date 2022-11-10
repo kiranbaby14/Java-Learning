@@ -38,7 +38,7 @@ public class ConnectionHandler implements Runnable {
 
             while ((message = this.in.readLine()) != null) {
                 command = message.split(" ")[0];
-
+                System.out.println(command);
                 switch (command) {
                     case "NICK": {
                         int limit = 2;
@@ -48,6 +48,8 @@ public class ConnectionHandler implements Runnable {
                         } else {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :Invalid nickname");
                         }
+
+                        break;
                     }
 
                     case "USER": {
@@ -71,6 +73,8 @@ public class ConnectionHandler implements Runnable {
                         } else {
                             sendMessage("Usage: USER <username> 0 * :<real_name>");
                         }
+
+                        break;
                     }
 
                     case "QUIT": {
@@ -86,6 +90,8 @@ public class ConnectionHandler implements Runnable {
                             IrcServerMain.getChannels().removeAll(removeClientsFromChannel);
                             shutdown();
                         }
+
+                        break;
                     }
 
                     case "JOIN": {
@@ -100,6 +106,8 @@ public class ConnectionHandler implements Runnable {
                         } else {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :Invalid channel name");
                         }
+
+                        break;
                     }
 
                     case "PART": {
@@ -123,6 +131,8 @@ public class ConnectionHandler implements Runnable {
                                 IrcServerMain.getChannels().removeAll(removeClientsFromChannel);
                             }
                         }
+
+                        break;
                     }
 
                     case "PRIVMSG": {
@@ -159,6 +169,8 @@ public class ConnectionHandler implements Runnable {
                         } else if (messageSplit.length < 3) {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :Invalid arguments to PRIVMSG command");
                         }
+
+                        break;
                     }
 
                     case "NAMES": {
@@ -187,6 +199,8 @@ public class ConnectionHandler implements Runnable {
                         } else {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :You need to register first");
                         }
+
+                        break;
                     }
 
                     case "LIST": {
@@ -199,6 +213,8 @@ public class ConnectionHandler implements Runnable {
                         } else {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :You need to register first");
                         }
+
+                        break;
                     }
 
                     case "TIME": {
@@ -207,10 +223,14 @@ public class ConnectionHandler implements Runnable {
                         df.setTimeZone(tz);
                         String nowAsISO = df.format(new Date());
                         sendMessage(":" + IrcServerMain.getServerName() + " 391 * :" + nowAsISO);
+
+                        break;
                     }
 
                     case "INFO": {
                         sendMessage(":" + IrcServerMain.getServerName() + " 371 * :This is an IRC server replica, created by 220015821");
+
+                        break;
                     }
 
                     case "PING": {
@@ -218,6 +238,8 @@ public class ConnectionHandler implements Runnable {
                         String[] messageSplit = message.split(" ", limit);
                         String sendMessage = messageSplit[1];
                         sendMessage("PONG " + sendMessage);
+
+                        break;
                     }
                 }
             }
