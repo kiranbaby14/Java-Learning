@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class IrcServerMain implements Runnable {
-    static String serverName;
+    public static String serverName;
     public static int portNumber;
     private ArrayList<ConnectionHandler> connections;
     private ArrayList<ChannelHandler> channels;
@@ -307,15 +307,19 @@ public class IrcServerMain implements Runnable {
     public static void main(String[] args) {
 
         if (args.length >= 2) {
-            serverName = args[0];
-            portNumber = Integer.parseInt(args[1]);
+            try {
+                serverName = args[0];
+                portNumber = Integer.parseInt(args[1]);
+            } catch (Exception e) {
+                System.out.println("Usage: java IrcServerMain <server_name> <port>");
+            }
             
             IrcServerMain server = new IrcServerMain();
             server.run();
-            
+
         } else {
             System.out.println("Usage: java IrcServerMain <server_name> <port>");
         }
-        
+
     }
 }
