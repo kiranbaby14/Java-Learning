@@ -193,7 +193,7 @@ public class IrcServerMain implements Runnable {
                             if(channelExists){
                                 broadCastToChannels(":" + this.nickName + " PRIVMSG " + target + " :" + sendMessage, target);
                             } else {
-                                this.out.println(":" + serverName + " 400 * :No channel exists with that name");
+                                this.out.println(":" + serverName + " 400 " + this.nickName + " :No channel exists with that name");
                             }
 
                         } else if(this.registered){
