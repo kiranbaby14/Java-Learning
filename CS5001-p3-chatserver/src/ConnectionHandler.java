@@ -55,11 +55,12 @@ public class ConnectionHandler implements Runnable {
                     case "USER": {
                         if (this.nickName != null) {
                             final int limit = 5;
+                            final int realNameIndex = 4;
                             String[] messageSplit = message.split(" ", limit);
                             if (messageSplit.length == limit && this.userName == null) {
-                                if (messageSplit[4].matches("^:[A-Za-z ]*")) {
+                                if (messageSplit[realNameIndex].matches("^:[A-Za-z ]*")) {
                                     this.userName = messageSplit[1];
-                                    this.realName = messageSplit[4].replaceAll(":", "");
+                                    this.realName = messageSplit[realNameIndex].replaceAll(":", "");
                                     this.registered = true;
                                     sendMessage(":" + IrcServerMain.getServerName() + " 001 " + this.nickName + " :Welcome to the IRC network, " + this.nickName);
                                 } else {
