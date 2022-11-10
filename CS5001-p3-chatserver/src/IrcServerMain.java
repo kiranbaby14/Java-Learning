@@ -191,7 +191,7 @@ public class IrcServerMain implements Runnable {
                         String target = messageSplit[1];
                         String sendMessage = messageSplit[2].replaceAll(":", "");
 
-                        if (target.matches("\"^#[A-Za-z0-9_]*\"") && this.registered && messageSplit.length == 3) {
+                        if (target.matches("^#[A-Za-z0-9_]*") && this.registered && messageSplit.length == 3) {
                             boolean channelExists = false;
                             for (ChannelHandler ch : channels) {
                                 if (ch.channelName.equals(target)) {
@@ -232,7 +232,6 @@ public class IrcServerMain implements Runnable {
                             for (ChannelHandler ch : channels) {
                                 if (ch.channelName.equals(channelName)) {
                                     channelExists = true;
-                                    // chaaaaaaaaaaaaaaaaaaaaange dissssssssssssssssssssssss shit
                                     channelNames.add(ch.connection.nickName);
                                 }
                             }
