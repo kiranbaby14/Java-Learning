@@ -49,6 +49,7 @@ public class IrcServerMain implements Runnable {
             }
         }
     }
+
     public void broadCastToChannels(String message, String channelName) {
         for (ChannelHandler ch : this.channels) {
             if (ch.connection.client != null && ch.channelName.equals(channelName)) {
@@ -118,10 +119,10 @@ public class IrcServerMain implements Runnable {
                         }
 
                     } else if (message.startsWith("USER")) {
-                        if(this.nickName != null) {
+                        if (this.nickName != null) {
                             String[] messageSplit = message.split(" ", 5);
                             if (messageSplit.length == 5 && this.userName == null) {
-                                if (messageSplit[4].matches("^:[A-Za-z ]*")){
+                                if (messageSplit[4].matches("^:[A-Za-z ]*")) {
                                     this.userName = messageSplit[1];
                                     this.realName = messageSplit[4].replaceAll(":", "");
                                     this.registered = true;
@@ -167,7 +168,7 @@ public class IrcServerMain implements Runnable {
                             for (ChannelHandler ch : channels) {
                                 if (ch.channelName.equals(messageSplit[1]) && this.registered) {
                                     channelExists = true;
-                                    broadCastToChannels(":" + this.nickName + "PART " + ch.channelName, ch.channelName);
+                                    broadCastToChannels(":" + this.nickName + " PART " + ch.channelName, ch.channelName);
                                     ch.removeClientFromChannel();
                                 }
                             }
@@ -182,56 +183,56 @@ public class IrcServerMain implements Runnable {
                         String target = messageSplit[1];
                         String sendMessage = messageSplit[2].replaceAll(":", "");
 
-                        if(target.matches("\"^#[A-Za-z0-9_]*\"") && this.registered && messageSplit.length == 3) {
+                        if (target.matches("\"^#[A-Za-z0-9_]*\"") && this.registered && messageSplit.length == 3) {
                             boolean channelExists = false;
-                            for(ChannelHandler ch: channels) {
-                                if(ch.channelName.equals(target)){
+                            for (ChannelHandler ch : channels) {
+                                if (ch.channelName.equals(target)) {
                                     channelExists = true;
                                 }
                             }
 
-                            if(channelExists){
+                            if (channelExists) {
                                 broadCastToChannels(":" + this.nickName + " PRIVMSG " + target + " :" + sendMessage, target);
                             } else {
                                 this.out.println(":" + serverName + " 400 * :No channel exists with that name");
                             }
 
-                        } else if(this.registered){
+                        } else if (this.registered) {
                             boolean nickNameExists = false;
-                            for(ConnectionHandler ch : connections) {
-                                if(ch.nickName.equals(target)) {
+                            for (ConnectionHandler ch : connections) {
+                                if (ch.nickName.equals(target)) {
                                     nickNameExists = true;
                                     ch.out.println(":" + this.nickName + " PRIVMSG " + target + " :" + sendMessage);
                                 }
                             }
-                            if(!nickNameExists) {
+                            if (!nickNameExists) {
                                 this.out.println(":" + serverName + " 400 * :No user exists with that name");
                             }
-                        } else if(!this.registered) {
+                        } else if (!this.registered) {
                             this.out.println(":" + serverName + " 400 * :You need to register first");
-                        } else if(messageSplit.length < 3) {
+                        } else if (messageSplit.length < 3) {
                             this.out.println(":" + serverName + " 400 * :Invalid arguments to PRIVMSG command");
                         }
 
                     } else if (message.startsWith("NAMES")) {
-                        if(this.registered) {
+                        if (this.registered) {
                             String[] messageSplit = message.split(" ", 2);
                             String channelName = messageSplit[1];
                             boolean channelExists = false;
                             ArrayList<String> channelNames = new ArrayList<>();
 
-                            for(ChannelHandler ch: channels) {
-                                if(ch.channelName.equals(channelName)) {
+                            for (ChannelHandler ch : channels) {
+                                if (ch.channelName.equals(channelName)) {
                                     channelExists = true;
                                     channelNames.add(ch.connection.nickName);
                                 }
                             }
 
-                            if(!channelExists){
+                            if (!channelExists) {
                                 this.out.println(":" + serverName + " 400 * :No channel exists with that name");
                             } else {
                                 this.out.print(":" + serverName + " 353 " + this.nickName + " = " + channelName + " :");
-                                for(String names: channelNames) {
+                                for (String names : channelNames) {
                                     this.out.print(names);
                                 }
                             }
@@ -241,11 +242,11 @@ public class IrcServerMain implements Runnable {
                         }
 
                     } else if (message.startsWith("LIST")) {
-                        if(this.registered) {
-                            for(ChannelHandler ch: channels) {
+                        if (this.registered) {
+                            for (ChannelHandler ch : channels) {
                                 this.out.println(":" + serverName + " 322 " + this.nickName + " " + ch.channelName);
                             }
-                            this.out.println(":" + serverName + " 323 " + this.nickName + ":End of LIST");
+                            this.out.println(":" + serverName + " 323 " + this.nickName + " :End of LIST");
 
                         } else {
                             this.out.println(":" + serverName + " 400 * :You need to register first");
@@ -259,8 +260,7 @@ public class IrcServerMain implements Runnable {
                         String[] messageSplit = message.split(" ", 2);
                         String sendMessage = messageSplit[1];
                         this.sendMessage("PONG " + sendMessage);
-                    }
-                    else {
+                    } else {
                         // broadCast(this.nickName + ": " + message);
                     }
                 }
