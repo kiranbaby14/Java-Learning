@@ -119,11 +119,11 @@ public class IrcServerMain implements Runnable {
 
                     } else if (message.startsWith("USER")) {
                         if(this.nickName != null) {
-                            String[] messageSplit = message.split(" ", 3);
-                            if (messageSplit.length == 3 && this.userName == null) {
-                                if (messageSplit[2].matches("^:[A-Za-z ]*")){
+                            String[] messageSplit = message.split(" ", 5);
+                            if (messageSplit.length == 5 && this.userName == null) {
+                                if (messageSplit[4].matches("^:[A-Za-z ]*")){
                                     this.userName = messageSplit[1];
-                                    this.realName = messageSplit[2].replaceAll(":", "");
+                                    this.realName = messageSplit[4].replaceAll(":", "");
                                     this.registered = true;
                                     this.out.println(":" + serverName + " 001 " + this.nickName + " :Welcome to the IRC network, " + this.nickName);
                                 } else {
@@ -132,7 +132,7 @@ public class IrcServerMain implements Runnable {
 
                             } else if (this.userName != null) {
                                 this.out.println(":" + serverName + " 400 * :You are already registered");
-                            } else if (messageSplit.length < 3) {
+                            } else if (messageSplit.length < 5) {
                                 this.out.println(":" + serverName + " 400 * :Not enough arguments");
                             }
                         } else {
@@ -313,7 +313,7 @@ public class IrcServerMain implements Runnable {
             } catch (Exception e) {
                 System.out.println("Usage: java IrcServerMain <server_name> <port>");
             }
-            
+
             IrcServerMain server = new IrcServerMain();
             server.run();
 
