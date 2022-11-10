@@ -169,21 +169,20 @@ public class IrcServerMain implements Runnable {
                         if (!this.registered) {
                             this.out.println(":" + serverName + " 400 * :You need to register first");
                         } else {
-                            ArrayList<ChannelHandler> removeChannels = new ArrayList<>();
+                            ArrayList<ChannelHandler> removeClientsFromChannel = new ArrayList<>();
                             for (ChannelHandler ch : channels) {
-                                if (ch.channelName.equals(messageSplit[1]) && this.registered) {
+                                if (ch.channelName.equals(messageSplit[1]) && this.registered && (ch.connection.client == this.client)) {
                                     channelExists = true;
                                     broadCastToChannels(":" + this.nickName + " PART " + ch.channelName, ch.channelName);
-                                    removeChannels.add(ch);
-                                    break;
-//                                    ch.removeClientFromChannel();
+                                    removeClientsFromChannel.add(ch);
+//                                  ch.removeClientFromChannel();
                                 }
                             }
 
                             if (!channelExists) {
                                 this.out.println(":" + serverName + " 400 " + this.nickName + " :No channel exists with that name");
                             } else {
-                                channels.removeAll(removeChannels);
+                                channels.removeAll(removeClientsFromChannel);
                             }
                         }
 
