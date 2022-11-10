@@ -32,8 +32,6 @@ public class IrcServerMain implements Runnable {
                 connections.add(handler);
                 this.pool.execute(handler);
             }
-
-
         } catch (Exception e) {
             shutdown();
         }
@@ -67,9 +65,8 @@ public class IrcServerMain implements Runnable {
                 ch.shutdown();
             }
         } catch (IOException e) {
-            // ignore; cannot handle
+            // ignore
         }
-
     }
 
     public static String getServerName() {
@@ -93,13 +90,10 @@ public class IrcServerMain implements Runnable {
             } catch (Exception e) {
                 System.out.println("Usage: java IrcServerMain <server_name> <port>");
             }
-
             IrcServerMain server = new IrcServerMain();
             server.run();
-
         } else {
             System.out.println("Usage: java IrcServerMain <server_name> <port>");
         }
-
     }
 }

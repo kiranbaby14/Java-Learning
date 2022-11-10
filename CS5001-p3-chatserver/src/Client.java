@@ -37,7 +37,7 @@ public class Client implements Runnable {
             in.close();
             out.close();
 
-            if(!client.isClosed()){
+            if (!client.isClosed()) {
                 client.close();
             }
 
@@ -53,7 +53,7 @@ public class Client implements Runnable {
                 BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
                 while (!done) {
                     String message = inReader.readLine();
-                    if(message.equals("/quit")) {
+                    if (message.equals("/quit")) {
                         out.println(message);
                         inReader.close();
                         shutdown();
