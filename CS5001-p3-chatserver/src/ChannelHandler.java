@@ -7,7 +7,6 @@ public class ChannelHandler {
     public ChannelHandler(String channelName, ConnectionHandler connection) {
         this.channelName = channelName;
         this.connection = connection;
-        this.server = new IrcServerMain();
     }
 
     public void addClientToChannel() {
