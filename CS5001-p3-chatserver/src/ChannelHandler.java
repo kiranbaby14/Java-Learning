@@ -14,9 +14,9 @@ public class ChannelHandler {
         IrcServerMain.getChannels().add(this);
     }
 
-    public void removeClientFromChannel() {
-        IrcServerMain.getChannels().remove(this);
-    }
+//    public void removeClientFromChannel() {
+//        IrcServerMain.getChannels().remove(this);
+//    }
 
     public String getChannelName() {
         return channelName;

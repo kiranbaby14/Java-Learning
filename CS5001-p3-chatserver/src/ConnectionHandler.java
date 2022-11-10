@@ -69,13 +69,15 @@ public class ConnectionHandler implements Runnable {
 
 
                 } else if (message.startsWith("QUIT") && this.registered) {
+                    ArrayList<ChannelHandler> removeClientsFromChannel = new ArrayList<>();
                     IrcServerMain.broadCast(":" + this.nickName + " QUIT");
                     // Todo : delete this client from all channels
                     for(ChannelHandler ch: IrcServerMain.getChannels()) {
                         if(ch.getConnection().client.equals(this.client)) {
-                            ch.removeClientFromChannel();
+                            removeClientsFromChannel.add(ch);
                         }
                     }
+                    IrcServerMain.getChannels().removeAll(removeClientsFromChannel);
                     shutdown();
 
                 } else if (message.startsWith("JOIN")) {
@@ -228,11 +230,4 @@ public class ConnectionHandler implements Runnable {
         return this.client;
     }
 
-    public String getNickName() {
-        return this.nickName;
-    }
-
-    public void setNickName(String nickName){
-        this.nickName = nickName;
-    }
 }
