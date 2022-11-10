@@ -231,7 +231,7 @@ public class IrcServerMain implements Runnable {
                             if (!channelExists) {
                                 this.out.println(":" + serverName + " 400 * :No channel exists with that name");
                             } else {
-                                this.out.print(":" + serverName + " 353 " + this.nickName + " = " + channelName + " :");
+                                this.out.println(":" + serverName + " 353 " + this.nickName + " = " + channelName + " :");
                                 for (String names : channelNames) {
                                     this.out.print(names);
                                 }
