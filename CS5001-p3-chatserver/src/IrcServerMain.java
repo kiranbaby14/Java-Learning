@@ -309,11 +309,13 @@ public class IrcServerMain implements Runnable {
         if (args.length >= 2) {
             serverName = args[0];
             portNumber = Integer.parseInt(args[1]);
+            
+            IrcServerMain server = new IrcServerMain();
+            server.run();
+            
         } else {
             System.out.println("Usage: java IrcServerMain <server_name> <port>");
         }
-
-        IrcServerMain server = new IrcServerMain();
-        server.run();
+        
     }
 }
