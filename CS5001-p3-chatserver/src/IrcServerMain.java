@@ -169,16 +169,20 @@ public class IrcServerMain implements Runnable {
                         if (!this.registered) {
                             this.out.println(":" + serverName + " 400 * :You need to register first");
                         } else {
+                            ArrayList<ChannelHandler> removeChannels = new ArrayList<>();
                             for (ChannelHandler ch : channels) {
                                 if (ch.channelName.equals(messageSplit[1]) && this.registered) {
                                     channelExists = true;
                                     broadCastToChannels(":" + this.nickName + " PART " + ch.channelName, ch.channelName);
-                                    ch.removeClientFromChannel();
+                                    removeChannels.add(ch);
+//                                    ch.removeClientFromChannel();
                                 }
                             }
 
                             if (!channelExists) {
                                 this.out.println(":" + serverName + " 400 " + this.nickName + " :No channel exists with that name");
+                            } else {
+                                channels.removeAll(removeChannels);
                             }
                         }
 
@@ -228,6 +232,7 @@ public class IrcServerMain implements Runnable {
                             for (ChannelHandler ch : channels) {
                                 if (ch.channelName.equals(channelName)) {
                                     channelExists = true;
+                                    // chaaaaaaaaaaaaaaaaaaaaange dissssssssssssssssssssssss shit
                                     channelNames.add(ch.connection.nickName);
                                 }
                             }
