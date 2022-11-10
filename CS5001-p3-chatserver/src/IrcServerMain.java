@@ -4,7 +4,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -254,6 +258,11 @@ public class IrcServerMain implements Runnable {
                         }
 
                     } else if (message.startsWith("TIME")) {
+                        TimeZone tz = TimeZone.getTimeZone("UTC");
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+                        df.setTimeZone(tz);
+                        String nowAsISO = df.format(new Date());
+                        sendMessage(":" + serverName + " 391 * :" + nowAsISO);
 
                     } else if (message.startsWith("INFO")) {
                         sendMessage(":" + serverName + " 371 * :This is an IRC server replica, created by 220015821");
