@@ -175,6 +175,7 @@ public class IrcServerMain implements Runnable {
                                     channelExists = true;
                                     broadCastToChannels(":" + this.nickName + " PART " + ch.channelName, ch.channelName);
                                     removeChannels.add(ch);
+                                    break;
 //                                    ch.removeClientFromChannel();
                                 }
                             }
