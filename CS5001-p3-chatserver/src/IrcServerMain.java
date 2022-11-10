@@ -142,9 +142,13 @@ public class IrcServerMain implements Runnable {
 
 
                     } else if (message.startsWith("QUIT") && this.registered) {
-//                        broadCast(this.nickName + " left the chat...");
                         broadCast(":" + this.nickName + " QUIT");
                         // Todo : delete this client from all channels
+                        for(ChannelHandler ch: channels) {
+                            if(ch.connection.client.equals(this.client)) {
+                                ch.removeClientFromChannel();
+                            }
+                        }
                         shutdown();
 
                     } else if (message.startsWith("JOIN")) {
