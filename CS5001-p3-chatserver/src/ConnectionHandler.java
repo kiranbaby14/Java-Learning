@@ -54,9 +54,9 @@ public class ConnectionHandler implements Runnable {
 
                     case "USER": {
                         if (this.nickName != null) {
-                            int limit = 5;
+                            final int limit = 5;
                             String[] messageSplit = message.split(" ", limit);
-                            if (messageSplit.length == 5 && this.userName == null) {
+                            if (messageSplit.length == limit && this.userName == null) {
                                 if (messageSplit[4].matches("^:[A-Za-z ]*")) {
                                     this.userName = messageSplit[1];
                                     this.realName = messageSplit[4].replaceAll(":", "");
@@ -67,7 +67,7 @@ public class ConnectionHandler implements Runnable {
                                 }
                             } else if (this.userName != null) {
                                 sendMessage(":" + IrcServerMain.getServerName() + " 400 * :You are already registered");
-                            } else if (messageSplit.length < 5) {
+                            } else if (messageSplit.length < limit) {
                                 sendMessage(":" + IrcServerMain.getServerName() + " 400 * :Not enough arguments");
                             }
                         } else {
@@ -136,12 +136,12 @@ public class ConnectionHandler implements Runnable {
                     }
 
                     case "PRIVMSG": {
-                        int limit = 3;
+                        final int limit = 3;
                         String[] messageSplit = message.split(" ", limit);
                         String target = messageSplit[1];
                         String sendMessage = messageSplit[2].replaceAll(":", "");
 
-                        if (target.matches("^#[A-Za-z0-9_]*") && this.registered && messageSplit.length == 3) {
+                        if (target.matches("^#[A-Za-z0-9_]*") && this.registered && messageSplit.length == limit) {
                             boolean channelExists = false;
                             for (ChannelHandler ch : IrcServerMain.getChannels()) {
                                 if (ch.getChannelName().equals(target)) {
@@ -166,7 +166,7 @@ public class ConnectionHandler implements Runnable {
                             }
                         } else if (!this.registered) {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :You need to register first");
-                        } else if (messageSplit.length < 3) {
+                        } else if (messageSplit.length < limit) {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :Invalid arguments to PRIVMSG command");
                         }
 
@@ -241,6 +241,8 @@ public class ConnectionHandler implements Runnable {
 
                         break;
                     }
+
+                    default: //default
                 }
             }
         } catch (IOException e) {
