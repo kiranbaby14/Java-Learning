@@ -98,10 +98,6 @@ public class IrcServerMain implements Runnable {
             try {
                 this.out = new PrintWriter(client.getOutputStream(), true);
                 this.in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-//                out.println("Please enter a nickname: ");
-//                nickName = in.readLine();
-//                System.out.println(nickName + " connected....");
-//                broadCast(nickName + " joined the chat.....");
 
                 String message;
                 while ((message = this.in.readLine()) != null) {
@@ -110,12 +106,9 @@ public class IrcServerMain implements Runnable {
 
                         String[] messageSplit = message.split(" ", 2);
                         if (messageSplit.length == 2 && messageSplit[1].matches("^[a-zA-Z_][A-Za-z0-9_]{1,9}")) {
-//                            broadCast(nickName + " renamed themselves to " + messageSplit[1]);
-//                            System.out.println(nickName + " renamed themselves to " + messageSplit[1]);
                             this.nickName = messageSplit[1];
-//                            out.println("Successfully changed nickname to " + nickName);
                         } else {
-                            this.out.println(":" + serverName + " 400 * :Invalid nickname");
+                            sendMessage(":" + serverName + " 400 * :Invalid nickname");
                         }
 
                     } else if (message.startsWith("USER")) {
@@ -126,18 +119,18 @@ public class IrcServerMain implements Runnable {
                                     this.userName = messageSplit[1];
                                     this.realName = messageSplit[4].replaceAll(":", "");
                                     this.registered = true;
-                                    this.out.println(":" + serverName + " 001 " + this.nickName + " :Welcome to the IRC network, " + this.nickName);
+                                    sendMessage(":" + serverName + " 001 " + this.nickName + " :Welcome to the IRC network, " + this.nickName);
                                 } else {
-                                    this.out.println(":" + serverName + " 400 * :Invalid arguments to USER command");
+                                    sendMessage(":" + serverName + " 400 * :Invalid arguments to USER command");
                                 }
 
                             } else if (this.userName != null) {
-                                this.out.println(":" + serverName + " 400 * :You are already registered");
+                                sendMessage(":" + serverName + " 400 * :You are already registered");
                             } else if (messageSplit.length < 5) {
-                                this.out.println(":" + serverName + " 400 * :Not enough arguments");
+                                sendMessage(":" + serverName + " 400 * :Not enough arguments");
                             }
                         } else {
-                            this.out.println("Usage: USER <username> 0 * :<real_name>");
+                            sendMessage("Usage: USER <username> 0 * :<real_name>");
                         }
 
 
@@ -158,16 +151,16 @@ public class IrcServerMain implements Runnable {
                             channel.addClientToChannel();
                             broadCastToChannels(":" + this.nickName + " JOIN " + channel.channelName, channel.channelName);
                         } else if (!this.registered && messageSplit[1].matches("^#[A-Za-z0-9_]*")) {
-                            this.out.println(":" + serverName + " 400 * :You need to register first");
+                            sendMessage(":" + serverName + " 400 * :You need to register first");
                         } else {
-                            this.out.println(":" + serverName + " 400 * :Invalid channel name");
+                            sendMessage(":" + serverName + " 400 * :Invalid channel name");
                         }
 
                     } else if (message.startsWith("PART")) {
                         boolean channelExists = false;
                         String[] messageSplit = message.split(" ", 2);
                         if (!this.registered) {
-                            this.out.println(":" + serverName + " 400 * :You need to register first");
+                            sendMessage(":" + serverName + " 400 * :You need to register first");
                         } else {
                             ArrayList<ChannelHandler> removeClientsFromChannel = new ArrayList<>();
                             for (ChannelHandler ch : channels) {
@@ -175,12 +168,11 @@ public class IrcServerMain implements Runnable {
                                     channelExists = true;
                                     broadCastToChannels(":" + this.nickName + " PART " + ch.channelName, ch.channelName);
                                     removeClientsFromChannel.add(ch);
-//                                  ch.removeClientFromChannel();
                                 }
                             }
 
                             if (!channelExists) {
-                                this.out.println(":" + serverName + " 400 " + this.nickName + " :No channel exists with that name");
+                                sendMessage(":" + serverName + " 400 " + this.nickName + " :No channel exists with that name");
                             } else {
                                 channels.removeAll(removeClientsFromChannel);
                             }
@@ -202,7 +194,7 @@ public class IrcServerMain implements Runnable {
                             if (channelExists) {
                                 broadCastToChannels(":" + this.nickName + " PRIVMSG " + target + " :" + sendMessage, target);
                             } else {
-                                this.out.println(":" + serverName + " 400 * :No channel exists with that name");
+                                sendMessage(":" + serverName + " 400 * :No channel exists with that name");
                             }
 
                         } else if (this.registered) {
@@ -214,12 +206,12 @@ public class IrcServerMain implements Runnable {
                                 }
                             }
                             if (!nickNameExists) {
-                                this.out.println(":" + serverName + " 400 * :No user exists with that name");
+                                sendMessage(":" + serverName + " 400 * :No user exists with that name");
                             }
                         } else if (!this.registered) {
-                            this.out.println(":" + serverName + " 400 * :You need to register first");
+                            sendMessage(":" + serverName + " 400 * :You need to register first");
                         } else if (messageSplit.length < 3) {
-                            this.out.println(":" + serverName + " 400 * :Invalid arguments to PRIVMSG command");
+                            sendMessage(":" + serverName + " 400 * :Invalid arguments to PRIVMSG command");
                         }
 
                     } else if (message.startsWith("NAMES")) {
@@ -237,9 +229,9 @@ public class IrcServerMain implements Runnable {
                             }
 
                             if (!channelExists) {
-                                this.out.println(":" + serverName + " 400 * :No channel exists with that name");
+                                sendMessage(":" + serverName + " 400 * :No channel exists with that name");
                             } else {
-                                this.out.print(":" + serverName + " 353 " + this.nickName + " = " + channelName + " :");
+                                sendMessage(":" + serverName + " 353 " + this.nickName + " = " + channelName + " :");
                                 for (String names : channelNames) {
                                     this.out.print(names);
                                 }
@@ -247,30 +239,29 @@ public class IrcServerMain implements Runnable {
                             }
 
                         } else {
-                            this.out.println(":" + serverName + " 400 * :You need to register first");
+                            sendMessage(":" + serverName + " 400 * :You need to register first");
                         }
 
                     } else if (message.startsWith("LIST")) {
                         if (this.registered) {
                             for (ChannelHandler ch : channels) {
-                                this.out.println(":" + serverName + " 322 " + this.nickName + " " + ch.channelName);
+                                sendMessage(":" + serverName + " 322 " + this.nickName + " " + ch.channelName);
                             }
-                            this.out.println(":" + serverName + " 323 " + this.nickName + " :End of LIST");
+                            sendMessage(":" + serverName + " 323 " + this.nickName + " :End of LIST");
 
                         } else {
-                            this.out.println(":" + serverName + " 400 * :You need to register first");
+                            sendMessage(":" + serverName + " 400 * :You need to register first");
                         }
 
                     } else if (message.startsWith("TIME")) {
 
                     } else if (message.startsWith("INFO")) {
+                        sendMessage(":" + serverName + " 371 * :This is an IRC server replica, created by 220015821");
 
                     } else if (message.startsWith("PING")) {
                         String[] messageSplit = message.split(" ", 2);
                         String sendMessage = messageSplit[1];
-                        this.sendMessage("PONG " + sendMessage);
-                    } else {
-                        // broadCast(this.nickName + ": " + message);
+                        sendMessage("PONG " + sendMessage);
                     }
                 }
             } catch (IOException e) {
