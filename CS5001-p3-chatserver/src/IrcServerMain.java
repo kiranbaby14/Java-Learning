@@ -73,6 +73,10 @@ public class IrcServerMain implements Runnable {
         return serverName;
     }
 
+    public static int getPortNumber() {
+        return portNumber;
+    }
+
     public static ArrayList<ConnectionHandler> getConnections() {
         return connections;
     }
