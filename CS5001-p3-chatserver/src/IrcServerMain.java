@@ -97,6 +97,8 @@ public class IrcServerMain implements Runnable {
 
     /**
      * Getter method to get the server name.
+     *
+     * @return the server name
      */
     public static String getServerName() {
         return serverName;
@@ -104,6 +106,8 @@ public class IrcServerMain implements Runnable {
 
     /**
      * Getter method to get the port number.
+     *
+     * @return the port number
      */
     public static int getPortNumber() {
         return portNumber;
@@ -111,13 +115,17 @@ public class IrcServerMain implements Runnable {
 
     /**
      * Getter method to get the arraylist of the all the clients.
+     *
+     * @return the arraylist of the all the clients
      */
     public static ArrayList<ConnectionHandler> getConnections() {
         return connections;
     }
 
     /**
-     * Getter method to get the arraylist of the all the channels in the server
+     * Getter method to get the arraylist of the all the channels in the server.
+     *
+     * @return the arraylist of the all the channels in the server
      */
     public static ArrayList<ChannelHandler> getChannels() {
         return channels;
