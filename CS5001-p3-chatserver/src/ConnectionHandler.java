@@ -96,9 +96,9 @@ public class ConnectionHandler implements Runnable {
                             ArrayList<ChannelHandler> removeClientFromChannels = new ArrayList<>();
                             IrcServerMain.broadCast(":" + this.nickName + " QUIT");
 
-                            for (ChannelHandler ch : IrcServerMain.getChannels()) { //removes the client fom all the channels
-                                if (ch.getConnection().client.equals(this.client)) {
-                                    removeClientFromChannels.add(ch);
+                            for (ChannelHandler channel : IrcServerMain.getChannels()) { //removes the client fom all the channels
+                                if (channel.getConnection().client.equals(this.client)) {
+                                    removeClientFromChannels.add(channel);
                                 }
                             }
                             IrcServerMain.getChannels().removeAll(removeClientFromChannels);
@@ -128,11 +128,11 @@ public class ConnectionHandler implements Runnable {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :You need to register first");
                         } else {
                             ArrayList<ChannelHandler> removeClientFromChannel = new ArrayList<>();
-                            for (ChannelHandler ch : IrcServerMain.getChannels()) {
-                                if (ch.getChannelName().equals(partMessageSplit[1]) && this.registered && (ch.getConnection().client == this.client)) {
+                            for (ChannelHandler channel : IrcServerMain.getChannels()) {
+                                if (channel.getChannelName().equals(partMessageSplit[1]) && this.registered && (channel.getConnection().client == this.client)) {
                                     channelExistsForPart = true;
-                                    IrcServerMain.broadCastToChannels(":" + this.nickName + " PART " + ch.getChannelName(), ch.getChannelName());
-                                    removeClientFromChannel.add(ch);
+                                    IrcServerMain.broadCastToChannels(":" + this.nickName + " PART " + channel.getChannelName(), channel.getChannelName());
+                                    removeClientFromChannel.add(channel);
                                 }
                             }
                             if (!channelExistsForPart) {
@@ -151,8 +151,8 @@ public class ConnectionHandler implements Runnable {
 
                         if (target.matches("^#[A-Za-z0-9_]*") && this.registered && privateMessageSplit.length == privateMessageLimit) {
                             boolean channelExistsForPrivate = false;
-                            for (ChannelHandler ch : IrcServerMain.getChannels()) { //checks whether channel is present in the server or not
-                                if (ch.getChannelName().equals(target)) {
+                            for (ChannelHandler channel : IrcServerMain.getChannels()) { //checks whether channel is present in the server or not
+                                if (channel.getChannelName().equals(target)) {
                                     channelExistsForPrivate = true;
                                     break;
                                 }
@@ -164,10 +164,10 @@ public class ConnectionHandler implements Runnable {
                             }
                         } else if (this.registered) {
                             boolean nickNameExists = false;
-                            for (ConnectionHandler ch : IrcServerMain.getConnections()) { // checks for matching nicknme from the list of clients
-                                if (ch.nickName.equals(target) && ch.registered) {
+                            for (ConnectionHandler connection : IrcServerMain.getConnections()) { // checks for matching nicknme from the list of clients
+                                if (connection.nickName.equals(target) && connection.registered) {
                                     nickNameExists = true;
-                                    ch.out.println(":" + this.nickName + " PRIVMSG " + target + " :" + privateSendMessage);
+                                    connection.out.println(":" + this.nickName + " PRIVMSG " + target + " :" + privateSendMessage);
                                 }
                             }
                             if (!nickNameExists) {
@@ -189,11 +189,11 @@ public class ConnectionHandler implements Runnable {
                             ArrayList<String> channelNames = new ArrayList<>();
 
                             if (channelName.matches("^#[A-Za-z0-9_]*")) {
-                                for (ChannelHandler ch : IrcServerMain.getChannels()) {
+                                for (ChannelHandler channel : IrcServerMain.getChannels()) {
                                     // checks whether the channel name exists or not and adds the clients that exist in that channel to a list
-                                    if (ch.getChannelName().equals(channelName)) {
+                                    if (channel.getChannelName().equals(channelName)) {
                                         channelExistsForNames = true;
-                                        channelNames.add(ch.getConnection().nickName);
+                                        channelNames.add(channel.getConnection().nickName);
                                     }
                                 }
                             } else {
@@ -217,9 +217,9 @@ public class ConnectionHandler implements Runnable {
                     case "LIST": // command to request the names of all channels on the server
                         if (this.registered) {
                             ArrayList<String> channelNames = new ArrayList<>();
-                            for (ChannelHandler ch : IrcServerMain.getChannels()) {
-                                if (!channelNames.contains(ch.getChannelName())) { // get the channel names only once
-                                    channelNames.add(ch.getChannelName());
+                            for (ChannelHandler channel : IrcServerMain.getChannels()) {
+                                if (!channelNames.contains(channel.getChannelName())) { // get the channel names only once
+                                    channelNames.add(channel.getChannelName());
                                 }
                             }
                             for (String channel : channelNames) {

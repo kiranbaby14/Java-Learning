@@ -55,9 +55,9 @@ public class IrcServerMain implements Runnable {
      * @param message the message that needs to be broadcast
      */
     public static void broadCast(String message) {
-        for (ConnectionHandler ch : connections) {
-            if (ch != null) {
-                ch.sendMessage(message);
+        for (ConnectionHandler connection : connections) {
+            if (connection != null) {
+                connection.sendMessage(message);
             }
         }
     }
@@ -69,9 +69,9 @@ public class IrcServerMain implements Runnable {
      * @param channelName the channel to which the message should be broadcast
      */
     public static void broadCastToChannels(String message, String channelName) {
-        for (ChannelHandler ch : channels) {
-            if (ch.getConnection().getClient() != null && ch.getChannelName().equals(channelName)) {
-                ch.getConnection().sendMessage(message);
+        for (ChannelHandler channel : channels) {
+            if (channel.getConnection().getClient() != null && channel.getChannelName().equals(channelName)) {
+                channel.getConnection().sendMessage(message);
             }
         }
     }
@@ -87,8 +87,8 @@ public class IrcServerMain implements Runnable {
                 server.close();
             }
 
-            for (ConnectionHandler ch : connections) {
-                ch.shutdown();
+            for (ConnectionHandler connection : connections) {
+                connection.shutdown();
             }
         } catch (IOException e) {
             // ignore
