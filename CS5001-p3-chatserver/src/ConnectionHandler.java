@@ -57,7 +57,6 @@ public class ConnectionHandler implements Runnable {
 
             while ((message = this.in.readLine()) != null) { // continuously gets the input from the client
                 command = message.split(" ")[0];
-                System.out.println(command);
 
                 switch (command) { // client commands switch case
                     case "NICK": // Command to set nickname
@@ -235,11 +234,23 @@ public class ConnectionHandler implements Runnable {
                         break;
 
                     case "PING": // command to communicate with the server
-                        int limit = 2;
-                        String[] messageSplit = message.split(" ", limit);
-                        String pingSendMessage = messageSplit[1];
+                        int pingMessageLimit = 2;
+                        String[] pingMessageSplit = message.split(" ", pingMessageLimit);
+                        String pingSendMessage = pingMessageSplit[1];
                         sendMessage("PONG " + pingSendMessage);
                         break;
+
+                        //----------------------EXTRA FEATURE------------------------
+                    case "MULTITABLE": // command to print the multiplication table of a number----(EXTRA FEATURE)
+                        final int multiTableMessageLimit = 2;
+                        String[] multiTableMessageSplit = message.split(" ", multiTableMessageLimit);
+                        int num = Integer.parseInt(multiTableMessageSplit[1]);
+                        sendMessage("  -------------");
+                        for(int i = 1; i <= 10; ++i)
+                        {
+                            sendMessage("  " + num + " * " + i + " = " + num * i);
+                        }
+                        sendMessage("  -------------");
 
                     default: //default None
                 }
