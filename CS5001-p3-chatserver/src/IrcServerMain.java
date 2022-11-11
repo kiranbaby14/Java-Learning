@@ -5,15 +5,27 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Chat Server
+ * A server that can contain multiple channels and clients.
+ * Clients can interact with the server using various COMMAND keywords
+ *
+ * @author: Student ID: 220015821
+ */
 public class IrcServerMain implements Runnable {
     private static String serverName;
     private static int portNumber;
-    private static ArrayList<ConnectionHandler> connections;
-    private static ArrayList<ChannelHandler> channels;
+    private static ArrayList<ConnectionHandler> connections; // stores all the client connections
+    private static ArrayList<ChannelHandler> channels; // stores all the channel informations
     private ServerSocket server;
     private boolean done;
     private ExecutorService pool;
 
+    /**
+     * Constructor of the class IrcServerMain.
+     * Initialises an arraylist for clients.
+     * Initialises an arraylist for the channels.
+     */
     public IrcServerMain() {
         connections = new ArrayList<>();
         channels = new ArrayList<>();
@@ -37,6 +49,11 @@ public class IrcServerMain implements Runnable {
         }
     }
 
+    /**
+     * Method to broadcast the message to all the clients in the server.
+     *
+     * @param message the message that needs to be broadcast
+     */
     public static void broadCast(String message) {
         for (ConnectionHandler ch : connections) {
             if (ch != null) {
@@ -45,6 +62,12 @@ public class IrcServerMain implements Runnable {
         }
     }
 
+    /**
+     * Method to broadcast the message to all the clients in a particular channel in the server.
+     *
+     * @param message the message that needs to be broadcast
+     * @param channelName the channel to which the message should be broadcast
+     */
     public static void broadCastToChannels(String message, String channelName) {
         for (ChannelHandler ch : channels) {
             if (ch.getConnection().getClient() != null && ch.getChannelName().equals(channelName)) {
@@ -53,6 +76,9 @@ public class IrcServerMain implements Runnable {
         }
     }
 
+    /**
+     * Method to shut down the server and all the clients.
+     */
     public void shutdown() {
         try {
             done = true;
@@ -69,22 +95,39 @@ public class IrcServerMain implements Runnable {
         }
     }
 
+    /**
+     * Getter method to get the server name.
+     */
     public static String getServerName() {
         return serverName;
     }
 
+    /**
+     * Getter method to get the port number.
+     */
     public static int getPortNumber() {
         return portNumber;
     }
 
+    /**
+     * Getter method to get the arraylist of the all the clients.
+     */
     public static ArrayList<ConnectionHandler> getConnections() {
         return connections;
     }
 
+    /**
+     * Getter method to get the arraylist of the all the channels in the server
+     */
     public static ArrayList<ChannelHandler> getChannels() {
         return channels;
     }
 
+    /**
+     * Main function.
+     *
+     * @param args the arguments taken from the CLI
+     */
     public static void main(String[] args) {
 
         if (args.length >= 2) {
