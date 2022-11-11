@@ -16,7 +16,7 @@ public class IrcServerMain implements Runnable {
     private static String serverName;
     private static int portNumber;
     private static ArrayList<ConnectionHandler> connections; // stores all the client connections
-    private static ArrayList<ChannelHandler> channels; // stores all the channel informations
+    private static ArrayList<ChannelHandler> channels; // stores all the channel information
     private ServerSocket server;
     private boolean done;
     private ExecutorService pool;

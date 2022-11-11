@@ -3,11 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * ConnectionHandler
@@ -43,7 +40,7 @@ public class ConnectionHandler implements Runnable {
      * Overrides the run method of  the Runnable class.
      * sets the incoming message functionality.
      * sets the outgoing message functionality.
-     *
+     * <p>
      * Continuously listens to the client for an input Command to the server.
      */
     @Override
@@ -60,7 +57,7 @@ public class ConnectionHandler implements Runnable {
 
                 switch (command) { // client commands switch case
                     case "NICK": // Command to set nickname
-                        int nickMessageLimit = 2;
+                        final int nickMessageLimit = 2;
                         String[] nickMessageSplit = message.split(" ", nickMessageLimit);
                         if (nickMessageSplit.length == 2 && nickMessageSplit[1].matches("^[a-zA-Z_][A-Za-z0-9_]{1,9}")) {
                             this.nickName = nickMessageSplit[1];
@@ -72,11 +69,12 @@ public class ConnectionHandler implements Runnable {
                     case "USER": // Command to set username, realname, and register the client
                         if (this.nickName != null) {
                             final int userMessageLimit = 5;
+                            final int userNameIndex = 1;
                             final int realNameIndex = 4;
                             String[] userMessageSplit = message.split(" ", userMessageLimit);
                             if (userMessageSplit.length == userMessageLimit && this.userName == null) {
-                                if (userMessageSplit[realNameIndex].matches("^:[A-Za-z ]*")) {
-                                    this.userName = userMessageSplit[1];
+                                if (userMessageSplit[realNameIndex].matches("^:[A-Za-z ]*")) { // checks whether the 4th index starts with ":" or not
+                                    this.userName = userMessageSplit[userNameIndex];
                                     this.realName = userMessageSplit[realNameIndex].replaceAll(":", "");
                                     this.registered = true;
                                     sendMessage(":" + IrcServerMain.getServerName() + " 001 " + this.nickName + " :Welcome to the IRC network, " + this.nickName);
@@ -89,33 +87,33 @@ public class ConnectionHandler implements Runnable {
                                 sendMessage(":" + IrcServerMain.getServerName() + " 400 * :Not enough arguments");
                             }
                         } else {
-                            sendMessage("Usage: USER <username> 0 * :<real_name>");
+                            sendMessage("You've yet to initialise a nick name!");
                         }
                         break;
 
                     case "QUIT": // command to quit from the server
                         if (this.registered) {
-                            ArrayList<ChannelHandler> removeClientsFromChannel = new ArrayList<>();
+                            ArrayList<ChannelHandler> removeClientFromChannels = new ArrayList<>();
                             IrcServerMain.broadCast(":" + this.nickName + " QUIT");
-                            // Todo : delete this client from all channels
-                            for (ChannelHandler ch : IrcServerMain.getChannels()) {
+
+                            for (ChannelHandler ch : IrcServerMain.getChannels()) { //removes the client fom all the channels
                                 if (ch.getConnection().client.equals(this.client)) {
-                                    removeClientsFromChannel.add(ch);
+                                    removeClientFromChannels.add(ch);
                                 }
                             }
-                            IrcServerMain.getChannels().removeAll(removeClientsFromChannel);
+                            IrcServerMain.getChannels().removeAll(removeClientFromChannels);
                             shutdown();
                         }
                         break;
 
                     case "JOIN": // command to join a channel in the server or create a new one if none exists
-                        int joinMessageLimit = 2;
+                        final int joinMessageLimit = 2;
                         String[] joinMessageSplit = message.split(" ", joinMessageLimit);
                         if (joinMessageSplit[1].matches("^#[A-Za-z0-9_]*") && this.registered) {
                             ChannelHandler channel = new ChannelHandler(joinMessageSplit[1], this);
                             channel.addClientToChannel();
                             IrcServerMain.broadCastToChannels(":" + this.nickName + " JOIN " + channel.getChannelName(), channel.getChannelName());
-                        } else if (!this.registered && joinMessageSplit[1].matches("^#[A-Za-z0-9_]*")) {
+                        } else if (!this.registered) {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :You need to register first");
                         } else {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :Invalid channel name");
@@ -124,23 +122,23 @@ public class ConnectionHandler implements Runnable {
 
                     case "PART": // exit from a channel in the server
                         boolean channelExistsForPart = false;
-                        int partMessageLimit = 2;
+                        final int partMessageLimit = 2;
                         String[] partMessageSplit = message.split(" ", partMessageLimit);
                         if (!this.registered) {
                             sendMessage(":" + IrcServerMain.getServerName() + " 400 * :You need to register first");
                         } else {
-                            ArrayList<ChannelHandler> removeClientsFromChannel = new ArrayList<>();
+                            ArrayList<ChannelHandler> removeClientFromChannel = new ArrayList<>();
                             for (ChannelHandler ch : IrcServerMain.getChannels()) {
                                 if (ch.getChannelName().equals(partMessageSplit[1]) && this.registered && (ch.getConnection().client == this.client)) {
                                     channelExistsForPart = true;
                                     IrcServerMain.broadCastToChannels(":" + this.nickName + " PART " + ch.getChannelName(), ch.getChannelName());
-                                    removeClientsFromChannel.add(ch);
+                                    removeClientFromChannel.add(ch);
                                 }
                             }
                             if (!channelExistsForPart) {
                                 sendMessage(":" + IrcServerMain.getServerName() + " 400 " + this.nickName + " :No channel exists with that name");
                             } else {
-                                IrcServerMain.getChannels().removeAll(removeClientsFromChannel);
+                                IrcServerMain.getChannels().removeAll(removeClientFromChannel);
                             }
                         }
                         break;
@@ -153,9 +151,10 @@ public class ConnectionHandler implements Runnable {
 
                         if (target.matches("^#[A-Za-z0-9_]*") && this.registered && privateMessageSplit.length == privateMessageLimit) {
                             boolean channelExistsForPrivate = false;
-                            for (ChannelHandler ch : IrcServerMain.getChannels()) {
+                            for (ChannelHandler ch : IrcServerMain.getChannels()) { //checks whether channel is present in the server or not
                                 if (ch.getChannelName().equals(target)) {
                                     channelExistsForPrivate = true;
+                                    break;
                                 }
                             }
                             if (channelExistsForPrivate) {
@@ -165,7 +164,7 @@ public class ConnectionHandler implements Runnable {
                             }
                         } else if (this.registered) {
                             boolean nickNameExists = false;
-                            for (ConnectionHandler ch : IrcServerMain.getConnections()) {
+                            for (ConnectionHandler ch : IrcServerMain.getConnections()) { // checks for matching nicknme from the list of clients
                                 if (ch.nickName.equals(target) && ch.registered) {
                                     nickNameExists = true;
                                     ch.out.println(":" + this.nickName + " PRIVMSG " + target + " :" + privateSendMessage);
@@ -183,18 +182,24 @@ public class ConnectionHandler implements Runnable {
 
                     case "NAMES": // command to get the nicknames of all users in a given channel
                         if (this.registered) {
-                            int namesMessageLimit = 2;
+                            final int namesMessageLimit = 2;
                             String[] namesMessageSplit = message.split(" ", namesMessageLimit);
                             String channelName = namesMessageSplit[1];
                             boolean channelExistsForNames = false;
                             ArrayList<String> channelNames = new ArrayList<>();
 
-                            for (ChannelHandler ch : IrcServerMain.getChannels()) {
-                                if (ch.getChannelName().equals(channelName)) {
-                                    channelExistsForNames = true;
-                                    channelNames.add(ch.getConnection().nickName);
+                            if (channelName.matches("^#[A-Za-z0-9_]*")) {
+                                for (ChannelHandler ch : IrcServerMain.getChannels()) {
+                                    // checks whether the channel name exists or not and adds the clients that exist in that channel to a list
+                                    if (ch.getChannelName().equals(channelName)) {
+                                        channelExistsForNames = true;
+                                        channelNames.add(ch.getConnection().nickName);
+                                    }
                                 }
+                            } else {
+                                sendMessage("A channel name must be a single # symbol followed by any number of letters, numbers and underscores");
                             }
+
                             if (!channelExistsForNames) {
                                 sendMessage(":" + IrcServerMain.getServerName() + " 400 * :No channel exists with that name");
                             } else {
@@ -211,8 +216,14 @@ public class ConnectionHandler implements Runnable {
 
                     case "LIST": // command to request the names of all channels on the server
                         if (this.registered) {
+                            ArrayList<String> channelNames = new ArrayList<>();
                             for (ChannelHandler ch : IrcServerMain.getChannels()) {
-                                sendMessage(":" + IrcServerMain.getServerName() + " 322 " + this.nickName + " " + ch.getChannelName());
+                                if (!channelNames.contains(ch.getChannelName())) { // get the channel names only once
+                                    channelNames.add(ch.getChannelName());
+                                }
+                            }
+                            for (String channel : channelNames) {
+                                sendMessage(":" + IrcServerMain.getServerName() + " 322 " + this.nickName + " " + channel);
                             }
                             sendMessage(":" + IrcServerMain.getServerName() + " 323 " + this.nickName + " :End of LIST");
 
@@ -222,11 +233,7 @@ public class ConnectionHandler implements Runnable {
                         break;
 
                     case "TIME": // command to ask the server to respond with the current date and time
-                        TimeZone tz = TimeZone.getTimeZone("UTC");
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
-                        df.setTimeZone(tz);
-                        String nowAsISO = df.format(new Date());
-                        sendMessage(":" + IrcServerMain.getServerName() + " 391 * :" + nowAsISO);
+                        sendMessage(":" + IrcServerMain.getServerName() + " 391 * :" + LocalDateTime.now());
                         break;
 
                     case "INFO": // command to request some basic information about the server
@@ -234,20 +241,20 @@ public class ConnectionHandler implements Runnable {
                         break;
 
                     case "PING": // command to communicate with the server
-                        int pingMessageLimit = 2;
+                        final int pingMessageLimit = 2;
                         String[] pingMessageSplit = message.split(" ", pingMessageLimit);
                         String pingSendMessage = pingMessageSplit[1];
                         sendMessage("PONG " + pingSendMessage);
                         break;
 
-                        //----------------------EXTRA FEATURE------------------------
+                    //----------------------EXTRA FEATURE------------------------
                     case "MULTITABLE": // command to print the multiplication table of a number----(EXTRA FEATURE)
                         final int multiTableMessageLimit = 2;
+                        final int tableLength = 10;
                         String[] multiTableMessageSplit = message.split(" ", multiTableMessageLimit);
                         int num = Integer.parseInt(multiTableMessageSplit[1]);
                         sendMessage("  -------------");
-                        for(int i = 1; i <= 10; ++i)
-                        {
+                        for (int i = 1; i <= tableLength; i++) {
                             sendMessage("  " + num + " * " + i + " = " + num * i);
                         }
                         sendMessage("  -------------");
