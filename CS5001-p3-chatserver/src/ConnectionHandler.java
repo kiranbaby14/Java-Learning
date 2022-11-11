@@ -251,13 +251,18 @@ public class ConnectionHandler implements Runnable {
                     case "MULTITABLE": // command to print the multiplication table of a number----(EXTRA FEATURE)
                         final int multiTableMessageLimit = 2;
                         final int tableLength = 10;
-                        String[] multiTableMessageSplit = message.split(" ", multiTableMessageLimit);
-                        int num = Integer.parseInt(multiTableMessageSplit[1]);
-                        sendMessage("  -------------");
-                        for (int i = 1; i <= tableLength; i++) {
-                            sendMessage("  " + num + " * " + i + " = " + num * i);
+                        try{
+                            String[] multiTableMessageSplit = message.split(" ", multiTableMessageLimit);
+                            int num = Integer.parseInt(multiTableMessageSplit[1]);
+                            sendMessage("  -------------");
+                            for (int i = 1; i <= tableLength; i++) {
+                                sendMessage("  " + num + " * " + i + " = " + num * i);
+                            }
+                            sendMessage("  -------------");
+                        } catch (Exception e) {
+                            sendMessage("Usage: MULTITABLE <number>");
                         }
-                        sendMessage("  -------------");
+
 
                     default: //default None
                 }
