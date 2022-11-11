@@ -34,7 +34,7 @@ public class ChannelHandler {
      * @return the name of the channel
      */
     public String getChannelName() {
-        return channelName;
+        return this.channelName;
     }
 
     /**
@@ -43,7 +43,7 @@ public class ChannelHandler {
      * @return the object of the connectionHandler class
      */
     public ConnectionHandler getConnection() {
-        return connection;
+        return this.connection;
     }
 
 }
