@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class University {
 
-    private ArrayList<Building> buildings;
-    private ArrayList<Person> people;
+    private ArrayList<Building> buildings = new ArrayList<>();
+    private ArrayList<Person> people = new ArrayList<>();
 
     public University(ArrayList<Building> buildings, ArrayList<Person> people) {
         this.buildings = buildings;
@@ -40,5 +40,18 @@ public class University {
 
     public void removePerson(Person person) {
         this.people.remove(person);
+    }
+
+    public String toString() {
+        StringBuffer result = new StringBuffer();
+        result.append("Buildings...\n");
+        for (Building building : buildings) {
+            result.append(" " + building);
+        }
+        result.append("\nPeople...\n");
+        for (Person person: people) {
+            result.append(" " + person);
+        }
+        return result.toString();
     }
 }

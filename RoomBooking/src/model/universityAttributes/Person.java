@@ -16,4 +16,10 @@ public class Person {
     public String getEmail() {
         return this.email;
     }
+
+    public String toString() {
+        StringBuffer result = new StringBuffer();
+        result.append("Name: " + this.name + ", Email:  " + this.email + "\n");
+        return result.toString();
+    }
 }
