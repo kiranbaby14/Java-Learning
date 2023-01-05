@@ -1,6 +1,6 @@
 * Main runnable code resides in "RoomBooking\main\MVCMain.java"
-* This project implements Room n]booking functionality for a university
-	and the project is madde keeping in mind of the MVC design.
+* This project implements Room booking functionality for a university
+	and the project is made keeping in mind of the MVC design.
 * When the main method is run it starts the CLI GUI and Swing GUI
 * Transfer of informations between models and views happen through controller
 	that resides in controller folder.
